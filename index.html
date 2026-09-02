@@ -58,7 +58,6 @@
 </head>
 <body class="bg-background text-foreground antialiased">
 <div class="flex h-dvh overflow-hidden">
-
   <!-- ============ SIDEBAR ============ -->
   <aside class="flex h-dvh w-[248px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar">
     <!-- Logo -->
@@ -112,12 +111,14 @@
             <button type="button" data-nav="cotizaciones" class="js-nav group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/80 hover:bg-sidebar-accent/70 hover:text-foreground">
               <svg class="icon size-5 text-sidebar-foreground/70 group-hover:text-gold" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
               <span class="flex-1 truncate text-left">Cotizaciones</span>
+              <span data-badge="cotizaciones" class="grid h-5 min-w-5 place-items-center rounded-full bg-gold/15 px-1.5 font-mono text-[11px] font-semibold text-gold">0</span>
             </button>
           </li>
           <li>
             <button type="button" data-nav="pedidos" class="js-nav group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/80 hover:bg-sidebar-accent/70 hover:text-foreground">
               <svg class="icon size-5 text-sidebar-foreground/70 group-hover:text-gold" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
               <span class="flex-1 truncate text-left">Pedidos</span>
+              <span data-badge="pedidos" class="grid h-5 min-w-5 place-items-center rounded-full bg-gold/15 px-1.5 font-mono text-[11px] font-semibold text-gold">0</span>
             </button>
           </li>
         </ul>
@@ -198,10 +199,8 @@
       </button>
     </div>
   </aside>
-
   <!-- ============ MAIN ============ -->
   <div class="flex flex-1 flex-col overflow-hidden">
-
     <!-- Topbar -->
     <header class="sticky top-0 z-20 flex h-16 items-center gap-4 border-b border-border bg-background/80 px-6 backdrop-blur-md">
       <div class="relative max-w-2xl flex-1">
@@ -227,11 +226,9 @@
         </div>
       </div>
     </header>
-
     <!-- Scroll area -->
     <main class="flex-1 overflow-y-auto p-6">
       <div id="view-dashboard" class="flex flex-col gap-6">
-
         <!-- Filtros + ciclo de vida -->
         <section class="flex flex-col gap-4">
           <div class="flex flex-wrap items-center gap-3">
@@ -246,7 +243,6 @@
             </button>
             <span id="datos-badge" class="ml-auto rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-gold">Conectando a Supabase…</span>
           </div>
-
           <div class="card-satin rounded-xl border border-border p-5 shadow-lg shadow-black/20">
             <div class="mb-4 flex flex-wrap items-baseline gap-2">
               <h2 class="text-base font-semibold text-foreground">Ciclo de vida del cliente industrial</h2>
@@ -265,7 +261,6 @@
             </div>
           </div>
         </section>
-
         <!-- KPI grid -->
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <!-- Pipeline Total -->
@@ -335,7 +330,6 @@
             <p class="mt-3 text-xs text-muted-foreground">Asignados por zona</p>
           </div>
         </div>
-
         <!-- Desglose de ventas (barras apiladas) -->
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <!-- Maquinaria -->
@@ -378,7 +372,6 @@
             </ul>
           </div>
         </div>
-
         <!-- Pipeline por etapa + Alertas -->
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <!-- Pipeline -->
@@ -399,7 +392,6 @@
           </div>
         </div>
       </div>
-
       <!-- Empresas -->
       <section id="view-empresas" class="hidden flex-col gap-6">
         <div class="flex flex-wrap items-end justify-between gap-3">
@@ -431,7 +423,6 @@
           </div>
         </div>
       </section>
-
       <!-- Kanban -->
       <section id="view-kanban" class="hidden flex-col gap-6">
         <div>
@@ -463,7 +454,6 @@
           </div>
         </div>
       </section>
-
       <!-- Lista genérica (resto del menú) -->
       <section id="view-lista" class="hidden flex-col gap-6">
         <div>
@@ -482,7 +472,6 @@
           </div>
         </div>
       </section>
-
       <!-- Leads (real: tabla leads) -->
       <section id="view-leads" class="hidden flex-col gap-6">
         <div class="flex flex-wrap items-end justify-between gap-3">
@@ -514,7 +503,6 @@
           </div>
         </div>
       </section>
-
       <!-- Contactos (real: tabla contactos) -->
       <section id="view-contactos" class="hidden flex-col gap-6">
         <div class="flex flex-wrap items-end justify-between gap-3">
@@ -546,50 +534,139 @@
           </div>
         </div>
       </section>
-
       <!-- Placeholders "En construcción" -->
       <section id="view-cotizaciones" class="hidden flex-col gap-6">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
-          <h2 class="text-base font-semibold text-foreground">Cotizaciones</h2>
-        </div>
-        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
-          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
-            <svg class="icon size-7" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
+            <h2 class="text-base font-semibold text-foreground">Cotizaciones</h2>
+            <p class="text-sm text-muted-foreground">Cotizaciones formales por empresa — tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">cotizaciones</code> en Supabase</p>
           </div>
-          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
-          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">cotizaciones</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+          <button type="button" id="btn-nueva-cotizacion" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
+            <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            Nueva cotización
+          </button>
+        </div>
+        <div class="card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Folio</th>
+                  <th class="px-4 py-3 font-medium">Empresa</th>
+                  <th class="px-4 py-3 font-medium">Contacto</th>
+                  <th class="px-4 py-3 font-medium">Estatus</th>
+                  <th class="px-4 py-3 font-medium">Total</th>
+                  <th class="px-4 py-3 font-medium">Vigencia</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="cotizaciones-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
         </div>
       </section>
-
       <section id="view-pedidos" class="hidden flex-col gap-6">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
-          <h2 class="text-base font-semibold text-foreground">Pedidos</h2>
-        </div>
-        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
-          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
-            <svg class="icon size-7" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
+            <h2 class="text-base font-semibold text-foreground">Pedidos</h2>
+            <p class="text-sm text-muted-foreground">Pedidos confirmados, con o sin cotización previa — tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">pedidos</code> en Supabase</p>
           </div>
-          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
-          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">pedidos</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+          <button type="button" id="btn-nuevo-pedido" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
+            <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            Nuevo pedido
+          </button>
+        </div>
+        <div class="card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Folio</th>
+                  <th class="px-4 py-3 font-medium">Empresa</th>
+                  <th class="px-4 py-3 font-medium">Cotización</th>
+                  <th class="px-4 py-3 font-medium">Estatus</th>
+                  <th class="px-4 py-3 font-medium">Total</th>
+                  <th class="px-4 py-3 font-medium">Entrega estimada</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="pedidos-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
         </div>
       </section>
-
       <section id="view-productos" class="hidden flex-col gap-6">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
-          <h2 class="text-base font-semibold text-foreground">Productos</h2>
-        </div>
-        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
-          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
-            <svg class="icon size-7" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
+            <h2 class="text-base font-semibold text-foreground">Productos</h2>
+            <p class="text-sm text-muted-foreground">Tres catálogos independientes — tablas <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">productos_maquinas</code>, <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">productos_consumibles</code> y <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">productos_servicios</code> en Supabase</p>
           </div>
-          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
-          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">productos</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+          <button type="button" id="btn-nuevo-producto" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
+            <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            <span id="btn-nuevo-producto-label">Nueva máquina</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-1 border-b border-border">
+          <button type="button" data-producto-tab="maquinas" class="js-producto-tab border-b-2 border-gold px-4 py-2.5 text-sm font-medium text-gold">Máquinas</button>
+          <button type="button" data-producto-tab="consumibles" class="js-producto-tab border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground">Consumibles</button>
+          <button type="button" data-producto-tab="servicios" class="js-producto-tab border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground">Servicios</button>
+        </div>
+        <div id="productos-panel-maquinas" class="card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">SKU</th>
+                  <th class="px-4 py-3 font-medium">Máquina</th>
+                  <th class="px-4 py-3 font-medium">Modelo</th>
+                  <th class="px-4 py-3 font-medium">Categoría</th>
+                  <th class="px-4 py-3 font-medium">Precio</th>
+                  <th class="px-4 py-3 font-medium">Estatus</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="maquinas-cat-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="productos-panel-consumibles" class="hidden card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">SKU</th>
+                  <th class="px-4 py-3 font-medium">Consumible</th>
+                  <th class="px-4 py-3 font-medium">Categoría</th>
+                  <th class="px-4 py-3 font-medium">Unidad</th>
+                  <th class="px-4 py-3 font-medium">Precio</th>
+                  <th class="px-4 py-3 font-medium">Estatus</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="consumibles-cat-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="productos-panel-servicios" class="hidden card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Servicio</th>
+                  <th class="px-4 py-3 font-medium">Tipo</th>
+                  <th class="px-4 py-3 font-medium">Precio</th>
+                  <th class="px-4 py-3 font-medium">Estatus</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="servicios-cat-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
         </div>
       </section>
-
       <section id="view-actividades" class="hidden flex-col gap-6">
         <div>
           <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
@@ -603,7 +680,6 @@
           <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">actividades</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
         </div>
       </section>
-
       <section id="view-calendario" class="hidden flex-col gap-6">
         <div>
           <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
@@ -620,7 +696,6 @@
     </main>
   </div>
 </div>
-
 <!-- Modal CRUD -->
 <div id="modal-empresa" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
@@ -695,7 +770,6 @@
     </form>
   </div>
 </div>
-
 <!-- Modal Lead -->
 <div id="modal-lead" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
@@ -777,7 +851,6 @@
     </form>
   </div>
 </div>
-
 <!-- Modal Contacto -->
 <div id="modal-contacto" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
@@ -832,7 +905,321 @@
     </form>
   </div>
 </div>
-
+<!-- Modal Producto · Máquina -->
+<div id="modal-producto-maquina" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Catálogo · Máquinas</p>
+        <h2 id="modal-maquina-title" class="text-base font-semibold text-foreground">Nueva máquina</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-producto-maquina" class="flex flex-col gap-3">
+      <input type="hidden" id="maquina-id" />
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">SKU</span>
+          <input id="maquina-sku" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Modelo</span>
+          <input id="maquina-modelo" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Nombre</span>
+        <input required id="maquina-nombre" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Categoría</span>
+          <select id="maquina-categoria" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Tampografía">Tampografía</option>
+            <option value="Serigrafía">Serigrafía</option>
+            <option value="Corte">Corte</option>
+            <option value="Curado UV">Curado UV</option>
+            <option value="Otro" selected>Otro</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Precio (MXN)</span>
+          <input type="number" min="0" step="0.01" id="maquina-precio" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Descripción</span>
+        <textarea id="maquina-descripcion" rows="2" class="rounded-lg border border-border bg-background/40 px-3 py-2 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></textarea>
+      </label>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="maquina-activo" checked class="size-4 rounded border-border accent-gold" />
+        <span class="text-muted-foreground">Activo en catálogo</span>
+      </label>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal Producto · Consumible -->
+<div id="modal-producto-consumible" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Catálogo · Consumibles</p>
+        <h2 id="modal-consumible-title" class="text-base font-semibold text-foreground">Nuevo consumible</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-producto-consumible" class="flex flex-col gap-3">
+      <input type="hidden" id="consumible-id" />
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">SKU</span>
+          <input id="consumible-sku" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Unidad de medida</span>
+          <input id="consumible-unidad" placeholder="litro, pieza, kg…" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Nombre</span>
+        <input required id="consumible-nombre" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Categoría</span>
+          <select id="consumible-categoria" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Tintas">Tintas</option>
+            <option value="Clichés">Clichés</option>
+            <option value="Solventes">Solventes</option>
+            <option value="Repuestos">Repuestos</option>
+            <option value="Otro" selected>Otro</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Precio (MXN)</span>
+          <input type="number" min="0" step="0.01" id="consumible-precio" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="consumible-activo" checked class="size-4 rounded border-border accent-gold" />
+        <span class="text-muted-foreground">Activo en catálogo</span>
+      </label>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal Producto · Servicio -->
+<div id="modal-producto-servicio" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Catálogo · Servicios</p>
+        <h2 id="modal-servicio-title" class="text-base font-semibold text-foreground">Nuevo servicio</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-producto-servicio" class="flex flex-col gap-3">
+      <input type="hidden" id="servicio-id" />
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Nombre</span>
+        <input required id="servicio-nombre" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Tipo</span>
+          <select id="servicio-tipo" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Mantenimiento Preventivo">Mantenimiento Preventivo</option>
+            <option value="Mantenimiento Correctivo">Mantenimiento Correctivo</option>
+            <option value="Instalación">Instalación</option>
+            <option value="Capacitación">Capacitación</option>
+            <option value="Maquila">Maquila</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Precio (MXN)</span>
+          <input type="number" min="0" step="0.01" id="servicio-precio" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="servicio-activo" checked class="size-4 rounded border-border accent-gold" />
+        <span class="text-muted-foreground">Activo en catálogo</span>
+      </label>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal Cotización (header + builder de partidas cotizacion_items) -->
+<div id="modal-cotizacion" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Comercial · Cotización</p>
+        <h2 id="modal-cotizacion-title" class="text-base font-semibold text-foreground">Nueva cotización</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-cotizacion" class="flex flex-col gap-4">
+      <input type="hidden" id="cot-id" />
+      <input type="hidden" id="cot-folio" />
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Empresa</span>
+          <select required id="cot-empresa" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Contacto</span>
+          <select id="cot-contacto" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></select>
+        </label>
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Oportunidad (opcional)</span>
+          <select id="cot-oportunidad" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="">— Sin vincular —</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Estatus</span>
+          <select id="cot-estatus" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Borrador" selected>Borrador</option>
+            <option value="Enviada">Enviada</option>
+            <option value="Aprobada">Aprobada</option>
+            <option value="Rechazada">Rechazada</option>
+            <option value="Vencida">Vencida</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Vigencia</span>
+          <input type="date" id="cot-fecha-vigencia" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <!-- Builder de partidas -->
+      <div class="rounded-lg border border-border bg-background/30 p-4">
+        <div class="mb-3 flex items-center justify-between">
+          <h3 class="text-sm font-semibold text-foreground">Partidas</h3>
+          <button type="button" id="btn-add-item-cotizacion" class="flex items-center gap-1 rounded-lg border border-gold/40 bg-gold/10 px-3 py-1.5 text-xs font-medium text-gold hover:bg-gold/20">
+            <svg class="icon size-3.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            Agregar partida
+          </button>
+        </div>
+        <div id="cotizacion-items-rows" class="flex flex-col gap-3"></div>
+        <p id="cotizacion-items-empty" class="py-4 text-center text-xs text-muted-foreground">Sin partidas — agrega al menos una</p>
+      </div>
+      <!-- Totales -->
+      <div class="grid grid-cols-2 gap-4 rounded-lg border border-border bg-background/30 p-4 sm:grid-cols-4">
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Subtotal</p>
+          <p id="cot-subtotal-display" class="mt-1 font-mono text-lg font-semibold text-foreground">$0.00</p>
+        </div>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Descuento global %</span>
+          <input type="number" min="0" max="100" step="0.01" id="cot-descuento-pct" value="0" class="h-9 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">IVA (16%)</p>
+          <p id="cot-iva-display" class="mt-1 font-mono text-lg font-semibold text-foreground">$0.00</p>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Total</p>
+          <p id="cot-total-display" class="mt-1 font-mono text-lg font-bold text-gold">$0.00</p>
+        </div>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Notas</span>
+        <textarea id="cot-notas" rows="2" class="rounded-lg border border-border bg-background/40 px-3 py-2 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></textarea>
+      </label>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar cotización</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal Pedido -->
+<div id="modal-pedido" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Comercial · Pedido</p>
+        <h2 id="modal-pedido-title" class="text-base font-semibold text-foreground">Nuevo pedido</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-pedido" class="flex flex-col gap-3">
+      <input type="hidden" id="ped-id" />
+      <input type="hidden" id="ped-folio" />
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Empresa</span>
+          <select required id="ped-empresa" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Contacto</span>
+          <select id="ped-contacto" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></select>
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Cotización de origen (opcional)</span>
+        <select id="ped-cotizacion" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+          <option value="">— Venta directa, sin cotización —</option>
+        </select>
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Estatus</span>
+          <select id="ped-estatus" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="En Proceso" selected>En Proceso</option>
+            <option value="Facturado">Facturado</option>
+            <option value="Enviado">Enviado</option>
+            <option value="Entregado">Entregado</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Total (MXN)</span>
+          <input type="number" min="0" step="0.01" id="ped-total" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Entrega estimada</span>
+        <input type="date" id="ped-fecha-entrega" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+      </label>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Notas</span>
+        <textarea id="ped-notas" rows="2" class="rounded-lg border border-border bg-background/40 px-3 py-2 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></textarea>
+      </label>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar pedido</button>
+      </div>
+    </form>
+  </div>
+</div>
 <!-- Modal Confirmación de borrado -->
 <div id="modal-confirm" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-confirm></div>
@@ -852,13 +1239,11 @@
     </div>
   </div>
 </div>
-
 <!-- Toast de error de red / Supabase -->
 <div id="error-toast" class="fixed bottom-4 right-4 z-[60] hidden max-w-sm rounded-lg border border-destructive/40 bg-card/95 px-4 py-3 text-sm shadow-lg shadow-black/40 modal-fade">
   <p class="font-semibold text-destructive">Error de conexión</p>
   <p id="error-toast-text" class="mt-1 text-xs text-muted-foreground"></p>
 </div>
-
 <script>
 (function () {
   // ============================================================
@@ -875,7 +1260,6 @@
   // ============================================================
   const SUPABASE_URL = 'https://kvjqekfbrvkatkthdjwo.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_8zSsLUp1SnQn7656usWieg_GUPHPe5D';
-
   function supaHeaders(extra) {
     return Object.assign(
       {
@@ -886,7 +1270,6 @@
       extra || {}
     );
   }
-
   async function supaFetch(path, options) {
     options = options || {};
     const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, Object.assign({}, options, {
@@ -901,14 +1284,12 @@
     const ct = res.headers.get('content-type') || '';
     return ct.includes('application/json') ? res.json() : null;
   }
-
   // ---- Mapeo oportunidad (+ empresa + contacto embebidos) -> objeto plano del frontend ----
   function defaultProbabilidad(etapa) {
     if (etapa === 'cerrado') return 100;
     if (etapa === 'negociacion') return 50;
     return 20; // prospecto
   }
-
   function mapOportunidadToEmpresa(op) {
     const emp = op.empresas || {};
     const con = op.contactos || {};
@@ -942,28 +1323,29 @@
       perdido: op.etapa === 'perdida',
     };
   }
-
   const ESTADOS = { prospecto: 'Lead', negociacion: 'Negociación', cerrado: 'Cerrado' };
   const COLORS = ['bg-gold', 'bg-chart-2', 'bg-chart-3'];
-
   window.empresas = []; // se llena desde Supabase vía loadEmpresas() (oportunidades + empresas + contactos)
   window.leads = []; // se llena desde Supabase vía loadLeads() (tabla leads)
   window.contactos = []; // se llena desde Supabase vía loadContactos() (tabla contactos, independiente de oportunidades)
   window.empresasCatalogo = []; // catálogo ligero de empresas para el <select> del modal de contactos
-
+  window.productosMaquinas = []; // se llena desde Supabase vía loadProductosMaquinas() (tabla productos_maquinas)
+  window.productosConsumibles = []; // se llena desde Supabase vía loadProductosConsumibles() (tabla productos_consumibles)
+  window.productosServicios = []; // se llena desde Supabase vía loadProductosServicios() (tabla productos_servicios)
+  window.cotizaciones = []; // se llena desde Supabase vía loadCotizaciones() (tabla cotizaciones)
+  window.pedidos = []; // se llena desde Supabase vía loadPedidos() (tabla pedidos)
   let currentView = 'dashboard';
   let searchQuery = '';
-  let pendingDelete = null; // { table: 'oportunidades' | 'leads' | 'contactos', id }
-
+  let pendingDelete = null; // { table: 'oportunidades' | 'leads' | 'contactos' | 'productos_maquinas' | 'productos_consumibles' | 'productos_servicios' | 'cotizaciones' | 'pedidos', id }
+  let productosSubTab = 'maquinas'; // 'maquinas' | 'consumibles' | 'servicios'
+  let cotizacionItemSeq = 0; // contador local de filas del builder de partidas (no es id de BD)
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
-
   function moneyK(n) {
     n = Number(n) || 0;
     if (Math.abs(n) >= 1000) return '$' + Math.round(n / 1000) + 'K';
     return '$' + n;
   }
-
   let errorTimer = null;
   function showError(msg) {
     const toast = $('#error-toast');
@@ -975,7 +1357,6 @@
   function hideError() {
     $('#error-toast').classList.add('hidden');
   }
-
   function matchesSearch(e) {
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
@@ -984,16 +1365,13 @@
       .toLowerCase()
       .includes(q);
   }
-
   function filtered() {
     return window.empresas.filter(matchesSearch);
   }
-
   // Leads "activos" = todos los que no se descartaron ni ya se convirtieron en oportunidad
   function leadsActivosCount() {
     return window.leads.filter((l) => l.estatus !== 'Descartado' && l.estatus !== 'Convertido').length;
   }
-
   function stats() {
     const rows = window.empresas;
     const abiertas = rows.filter((e) => e.estado !== 'cerrado' && Number(e.pipeline) > 0);
@@ -1004,12 +1382,16 @@
     const cerradas = ganadas.reduce((s, e) => s + Number(e.ventasMaquinaria) + Number(e.ventasConsumibles) + Number(e.ventasServicios), 0);
     const denom = ganadas.length + perdidas.length;
     const conversion = denom ? Math.round((ganadas.length / denom) * 100) : 0;
+    // Cotizaciones vivas / Pedidos en proceso ahora leen de las tablas reales
+    // (fase Cotizaciones + Pedidos), no del arreglo derivado de oportunidades.
+    const cotizacionesVivas = (window.cotizaciones || []).filter((c) => ['Borrador', 'Enviada', 'Aprobada'].includes(c.estatus)).length;
+    const pedidosEnProceso = (window.pedidos || []).filter((p) => p.estatus === 'En Proceso').length;
     return {
       leads: leadsActivosCount(), // viene de la tabla real "leads", no de oportunidades en etapa "prospecto"
       empresas: rows.length,
       abiertas: abiertas.length,
-      cotizaciones: rows.filter((e) => e.cotizacionViva).length,
-      pedidos: rows.filter((e) => e.pedidoEnProceso).length,
+      cotizaciones: cotizacionesVivas,
+      pedidos: pedidosEnProceso,
       maquinas: rows.reduce((s, e) => s + Number(e.maquinasInstaladas || 0), 0),
       recompras: rows.filter((e) => e.recompra).length,
       tickets: rows.reduce((s, e) => s + Number(e.ticketsAbiertos || 0), 0),
@@ -1023,7 +1405,6 @@
       vencidos: rows.filter((e) => Number(e.diasSinActividad) >= 7).length,
     };
   }
-
   function setStats() {
     const s = stats();
     $$('[data-stat]').forEach((el) => {
@@ -1039,10 +1420,11 @@
     $$('[data-badge="leads"]').forEach((el) => { el.textContent = s.leads; });
     $$('[data-badge="abiertas"]').forEach((el) => { el.textContent = s.abiertas; });
     $$('[data-badge="tickets"]').forEach((el) => { el.textContent = s.tickets; });
+    $$('[data-badge="cotizaciones"]').forEach((el) => { el.textContent = s.cotizaciones; });
+    $$('[data-badge="pedidos"]').forEach((el) => { el.textContent = s.pedidos; });
     const ring = $('#conversion-ring');
     if (ring) ring.style.background = 'conic-gradient(var(--gold) ' + s.conversion + '%, oklch(1 0 0 / 12%) 0)';
   }
-
   function renderBreakdown(kind, listId, barId, totalAttr) {
     const withVal = window.empresas;
     const total = withVal.reduce((s, e) => s + Number(e[kind] || 0), 0);
@@ -1067,7 +1449,6 @@
       return '<div class="' + COLORS[i % COLORS.length] + '" style="width:' + w + '%"></div>';
     }).join('');
   }
-
   function renderPipeline() {
     const ul = $('#pipeline-etapas');
     if (!ul) return;
@@ -1089,7 +1470,6 @@
         '<span class="font-mono text-[11px] font-semibold text-primary-foreground">' + n + '</span></div></div></li>';
     }).join('');
   }
-
   function renderAlertas() {
     const ul = $('#alertas-list');
     if (!ul) return;
@@ -1114,12 +1494,10 @@
         '<div class="min-w-0 flex-1"><p class="text-sm font-medium text-foreground">' + a.title + '</p><p class="truncate text-xs text-muted-foreground">' + a.detail + '</p></div></li>'
     )).join('');
   }
-
   function estadoBadge(estado) {
     const map = { prospecto: 'text-gold bg-gold/15', negociacion: 'text-chart-2 bg-chart-2/15', cerrado: 'text-chart-3 bg-chart-3/15' };
     return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[estado] || '') + '">' + (ESTADOS[estado] || estado) + '</span>';
   }
-
   function renderEmpresas() {
     const tb = $('#empresas-tbody');
     if (!tb) return;
@@ -1143,7 +1521,6 @@
     tb.querySelectorAll('[data-edit]').forEach((btn) => btn.addEventListener('click', () => openModal(btn.getAttribute('data-edit'))));
     tb.querySelectorAll('[data-del]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('oportunidades', btn.getAttribute('data-del'))));
   }
-
   function renderKanban() {
     ['prospecto', 'negociacion', 'cerrado'].forEach((estado) => {
       const col = $('[data-cards="' + estado + '"]');
@@ -1168,7 +1545,6 @@
       });
     });
   }
-
   function bindKanbanDnd() {
     $$('.kanban-col').forEach((col) => {
       col.addEventListener('dragover', (ev) => {
@@ -1185,7 +1561,6 @@
         if (!emp) return;
         const nuevaEtapa = col.getAttribute('data-estado');
         if (emp.estado === nuevaEtapa) return;
-
         // Actualización optimista en UI, con reversión si falla la escritura en Supabase
         const anteriorEtapa = emp.estado;
         const anteriorProb = emp.probabilidad;
@@ -1193,7 +1568,6 @@
         emp.probabilidad = defaultProbabilidad(nuevaEtapa);
         if (nuevaEtapa === 'cerrado') emp.perdido = false;
         renderAll();
-
         try {
           await supaFetch('oportunidades?id=eq.' + id, {
             method: 'PATCH',
@@ -1209,7 +1583,6 @@
       });
     });
   }
-
   // ============================================================
   // Módulo LEADS (tabla real "leads", independiente de oportunidades)
   // ============================================================
@@ -1221,7 +1594,6 @@
     const map = { Nuevo: 'text-gold bg-gold/15', Contactado: 'text-chart-2 bg-chart-2/15', Calificado: 'text-chart-3 bg-chart-3/15', Descartado: 'text-muted-foreground bg-border/40', Convertido: 'text-chart-3 bg-chart-3/15' };
     return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[s] || '') + '">' + s + '</span>';
   }
-
   function renderLeads() {
     const tb = $('#leads-tbody');
     if (!tb) return;
@@ -1245,7 +1617,6 @@
     tb.querySelectorAll('[data-edit-lead]').forEach((btn) => btn.addEventListener('click', () => openLeadModal(btn.getAttribute('data-edit-lead'))));
     tb.querySelectorAll('[data-del-lead]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('leads', btn.getAttribute('data-del-lead'))));
   }
-
   async function loadLeads() {
     try {
       const rows = await supaFetch('leads?select=*&order=fecha_alta.desc', { method: 'GET' });
@@ -1259,7 +1630,6 @@
     renderLeads();
     setStats();
   }
-
   function openLeadModal(id) {
     const modal = $('#modal-lead');
     const lead = id ? window.leads.find((l) => l.id === id) : null;
@@ -1280,7 +1650,6 @@
   function closeLeadModal() {
     $('#modal-lead').classList.add('hidden');
   }
-
   // ============================================================
   // Módulo CONTACTOS (tabla real "contactos", independiente de oportunidades)
   // ============================================================
@@ -1307,7 +1676,6 @@
     tb.querySelectorAll('[data-edit-contacto]').forEach((btn) => btn.addEventListener('click', () => openContactoModal(btn.getAttribute('data-edit-contacto'))));
     tb.querySelectorAll('[data-del-contacto]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('contactos', btn.getAttribute('data-del-contacto'))));
   }
-
   async function loadContactos() {
     try {
       const rows = await supaFetch('contactos?select=*,empresas(id,nombre)&order=nombre.asc', { method: 'GET' });
@@ -1320,7 +1688,6 @@
     }
     renderContactos();
   }
-
   // Catálogo ligero de empresas, solo para poblar el <select> del modal de contactos
   async function loadEmpresasCatalogo() {
     try {
@@ -1333,7 +1700,6 @@
       window.empresasCatalogo = [];
     }
   }
-
   function openContactoModal(id) {
     const modal = $('#modal-contacto');
     const c = id ? window.contactos.find((x) => x.id === id) : null;
@@ -1357,10 +1723,534 @@
   function closeContactoModal() {
     $('#modal-contacto').classList.add('hidden');
   }
+  // ============================================================
+  // Helpers compartidos: moneda, folios y catálogos cruzados
+  // ============================================================
+  function fmtMoney(n) {
+    n = Number(n) || 0;
+    return n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN', minimumFractionDigits: 2 });
+  }
+  function activoBadge(activo) {
+    return activo
+      ? '<span class="rounded-full bg-gold/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-gold">Activo</span>'
+      : '<span class="rounded-full bg-border/40 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Inactivo</span>';
+  }
+  function estatusCotizacionBadge(s) {
+    const map = { Borrador: 'text-muted-foreground bg-border/40', Enviada: 'text-gold bg-gold/15', Aprobada: 'text-chart-3 bg-chart-3/15', Rechazada: 'text-destructive bg-destructive/15', Vencida: 'text-chart-2 bg-chart-2/15' };
+    return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[s] || '') + '">' + s + '</span>';
+  }
+  function estatusPedidoBadge(s) {
+    const map = { 'En Proceso': 'text-gold bg-gold/15', Facturado: 'text-chart-2 bg-chart-2/15', Enviado: 'text-chart-2 bg-chart-2/15', Entregado: 'text-chart-3 bg-chart-3/15', Cancelado: 'text-destructive bg-destructive/15' };
+    return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[s] || '') + '">' + s + '</span>';
+  }
+  // Genera el siguiente folio correlativo (COT-0001, PED-0001…) a partir de lo ya cargado en memoria.
+  function nextFolio(list, prefix) {
+    let max = 0;
+    const re = new RegExp('^' + prefix + '-(\\d+)$');
+    (list || []).forEach((item) => {
+      const m = re.exec(item.folio || '');
+      if (m) max = Math.max(max, parseInt(m[1], 10));
+    });
+    return prefix + '-' + String(max + 1).padStart(4, '0');
+  }
+  function contactosByEmpresa(empresaId) {
+    return window.contactos.filter((c) => c.empresa_id === empresaId);
+  }
+  function populateEmpresaSelectEl(sel) {
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = window.empresasCatalogo.map((e) => '<option value="' + e.id + '">' + e.nombre + '</option>').join('');
+    if (current) sel.value = current;
+  }
+  function populateContactoSelectEl(sel, empresaId, selectedId) {
+    if (!sel) return;
+    const rows = empresaId ? contactosByEmpresa(empresaId) : [];
+    sel.innerHTML = '<option value="">— Sin contacto —</option>' + rows.map((c) => '<option value="' + c.id + '">' + [c.nombre, c.apellido].filter(Boolean).join(' ') + '</option>').join('');
+    if (selectedId) sel.value = selectedId;
+  }
+  function populateOportunidadSelectEl(sel, empresaId, selectedId) {
+    if (!sel) return;
+    const rows = empresaId ? window.empresas.filter((e) => e.empresaId === empresaId) : [];
+    sel.innerHTML = '<option value="">— Sin vincular —</option>' + rows.map((e) => '<option value="' + e.id + '">' + (ESTADOS[e.estado] || e.estado) + ' · ' + moneyK(e.pipeline) + '</option>').join('');
+    if (selectedId) sel.value = selectedId;
+  }
+  function populateCotizacionSelectEl(sel, empresaId, selectedId) {
+    if (!sel) return;
+    const rows = empresaId ? window.cotizaciones.filter((c) => c.empresa_id === empresaId) : [];
+    sel.innerHTML = '<option value="">— Venta directa, sin cotización —</option>' + rows.map((c) => '<option value="' + c.id + '">' + c.folio + ' · ' + fmtMoney(c.total) + ' (' + c.estatus + ')</option>').join('');
+    if (selectedId) sel.value = selectedId;
+  }
 
-  // Nota: leads, contactos, cotizaciones, pedidos, productos, actividades y calendario
-  // ya NO usan este listado genérico — leads/contactos tienen su propia vista+tabla real,
-  // y los demás quedan en "En construcción" (#view-cotizaciones, #view-pedidos, etc.)
+  // ============================================================
+  // Módulo PRODUCTOS: 3 catálogos independientes
+  // (productos_maquinas, productos_consumibles, productos_servicios)
+  // ============================================================
+  function renderMaquinasCat() {
+    const tb = $('#maquinas-cat-tbody');
+    if (!tb) return;
+    const rows = window.productosMaquinas;
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin máquinas en catálogo</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((m) => (
+      '<tr class="hover:bg-background/30">' +
+        '<td class="px-4 py-3 font-mono text-xs text-muted-foreground">' + (m.sku || '—') + '</td>' +
+        '<td class="px-4 py-3"><p class="font-medium text-foreground">' + m.nombre + '</p></td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (m.modelo || '—') + '</td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (m.categoria || '—') + '</td>' +
+        '<td class="px-4 py-3 font-mono text-foreground">' + fmtMoney(m.precio) + '</td>' +
+        '<td class="px-4 py-3">' + activoBadge(m.activo) + '</td>' +
+        '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+          '<button type="button" data-edit-maquina="' + m.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+          '<button type="button" data-del-maquina="' + m.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+        '</div></td></tr>'
+    )).join('');
+    tb.querySelectorAll('[data-edit-maquina]').forEach((btn) => btn.addEventListener('click', () => openMaquinaModal(btn.getAttribute('data-edit-maquina'))));
+    tb.querySelectorAll('[data-del-maquina]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('productos_maquinas', btn.getAttribute('data-del-maquina'))));
+  }
+  function renderConsumiblesCat() {
+    const tb = $('#consumibles-cat-tbody');
+    if (!tb) return;
+    const rows = window.productosConsumibles;
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin consumibles en catálogo</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((c) => (
+      '<tr class="hover:bg-background/30">' +
+        '<td class="px-4 py-3 font-mono text-xs text-muted-foreground">' + (c.sku || '—') + '</td>' +
+        '<td class="px-4 py-3"><p class="font-medium text-foreground">' + c.nombre + '</p></td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (c.categoria || '—') + '</td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (c.unidad_medida || '—') + '</td>' +
+        '<td class="px-4 py-3 font-mono text-foreground">' + fmtMoney(c.precio) + '</td>' +
+        '<td class="px-4 py-3">' + activoBadge(c.activo) + '</td>' +
+        '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+          '<button type="button" data-edit-consumible="' + c.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+          '<button type="button" data-del-consumible="' + c.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+        '</div></td></tr>'
+    )).join('');
+    tb.querySelectorAll('[data-edit-consumible]').forEach((btn) => btn.addEventListener('click', () => openConsumibleModal(btn.getAttribute('data-edit-consumible'))));
+    tb.querySelectorAll('[data-del-consumible]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('productos_consumibles', btn.getAttribute('data-del-consumible'))));
+  }
+  function renderServiciosCat() {
+    const tb = $('#servicios-cat-tbody');
+    if (!tb) return;
+    const rows = window.productosServicios;
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin servicios en catálogo</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((s) => (
+      '<tr class="hover:bg-background/30">' +
+        '<td class="px-4 py-3"><p class="font-medium text-foreground">' + s.nombre + '</p></td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (s.tipo || '—') + '</td>' +
+        '<td class="px-4 py-3 font-mono text-foreground">' + fmtMoney(s.precio) + '</td>' +
+        '<td class="px-4 py-3">' + activoBadge(s.activo) + '</td>' +
+        '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+          '<button type="button" data-edit-servicio="' + s.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+          '<button type="button" data-del-servicio="' + s.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+        '</div></td></tr>'
+    )).join('');
+    tb.querySelectorAll('[data-edit-servicio]').forEach((btn) => btn.addEventListener('click', () => openServicioModal(btn.getAttribute('data-edit-servicio'))));
+    tb.querySelectorAll('[data-del-servicio]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('productos_servicios', btn.getAttribute('data-del-servicio'))));
+  }
+  async function loadProductosMaquinas() {
+    try {
+      window.productosMaquinas = await supaFetch('productos_maquinas?select=*&order=nombre.asc', { method: 'GET' });
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.productosMaquinas = [];
+      showError('No se pudieron cargar las máquinas del catálogo: ' + err.message);
+    }
+    renderMaquinasCat();
+  }
+  async function loadProductosConsumibles() {
+    try {
+      window.productosConsumibles = await supaFetch('productos_consumibles?select=*&order=nombre.asc', { method: 'GET' });
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.productosConsumibles = [];
+      showError('No se pudieron cargar los consumibles del catálogo: ' + err.message);
+    }
+    renderConsumiblesCat();
+  }
+  async function loadProductosServicios() {
+    try {
+      window.productosServicios = await supaFetch('productos_servicios?select=*&order=nombre.asc', { method: 'GET' });
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.productosServicios = [];
+      showError('No se pudieron cargar los servicios del catálogo: ' + err.message);
+    }
+    renderServiciosCat();
+  }
+  function loadProductosCatalogos() {
+    // Fire-and-forget en paralelo, igual que el resto de cargas iniciales del CRM
+    loadProductosMaquinas();
+    loadProductosConsumibles();
+    loadProductosServicios();
+  }
+  function renderProductosActive() {
+    if (productosSubTab === 'consumibles') renderConsumiblesCat();
+    else if (productosSubTab === 'servicios') renderServiciosCat();
+    else renderMaquinasCat();
+  }
+  function switchProductosTab(tab) {
+    productosSubTab = tab;
+    $$('.js-producto-tab').forEach((btn) => {
+      const active = btn.getAttribute('data-producto-tab') === tab;
+      btn.className = 'js-producto-tab border-b-2 px-4 py-2.5 text-sm font-medium ' + (active ? 'border-gold text-gold' : 'border-transparent text-muted-foreground hover:text-foreground');
+    });
+    ['maquinas', 'consumibles', 'servicios'].forEach((t) => {
+      const panel = $('#productos-panel-' + t);
+      if (panel) panel.classList.toggle('hidden', t !== tab);
+    });
+    const label = $('#btn-nuevo-producto-label');
+    if (label) label.textContent = tab === 'consumibles' ? 'Nuevo consumible' : tab === 'servicios' ? 'Nuevo servicio' : 'Nueva máquina';
+    renderProductosActive();
+  }
+  function openMaquinaModal(id) {
+    const modal = $('#modal-producto-maquina');
+    const m = id ? window.productosMaquinas.find((x) => x.id === id) : null;
+    $('#modal-maquina-title').textContent = m ? 'Editar máquina' : 'Nueva máquina';
+    $('#maquina-id').value = m ? m.id : '';
+    $('#maquina-sku').value = m ? (m.sku || '') : '';
+    $('#maquina-modelo').value = m ? (m.modelo || '') : '';
+    $('#maquina-nombre').value = m ? m.nombre : '';
+    $('#maquina-categoria').value = m ? (m.categoria || 'Otro') : 'Otro';
+    $('#maquina-precio').value = m ? (m.precio || 0) : 0;
+    $('#maquina-descripcion').value = m ? (m.descripcion || '') : '';
+    $('#maquina-activo').checked = m ? !!m.activo : true;
+    modal.classList.remove('hidden');
+    $('#maquina-nombre').focus();
+  }
+  function closeMaquinaModal() { $('#modal-producto-maquina').classList.add('hidden'); }
+  function openConsumibleModal(id) {
+    const modal = $('#modal-producto-consumible');
+    const c = id ? window.productosConsumibles.find((x) => x.id === id) : null;
+    $('#modal-consumible-title').textContent = c ? 'Editar consumible' : 'Nuevo consumible';
+    $('#consumible-id').value = c ? c.id : '';
+    $('#consumible-sku').value = c ? (c.sku || '') : '';
+    $('#consumible-unidad').value = c ? (c.unidad_medida || '') : '';
+    $('#consumible-nombre').value = c ? c.nombre : '';
+    $('#consumible-categoria').value = c ? (c.categoria || 'Otro') : 'Otro';
+    $('#consumible-precio').value = c ? (c.precio || 0) : 0;
+    $('#consumible-activo').checked = c ? !!c.activo : true;
+    modal.classList.remove('hidden');
+    $('#consumible-nombre').focus();
+  }
+  function closeConsumibleModal() { $('#modal-producto-consumible').classList.add('hidden'); }
+  function openServicioModal(id) {
+    const modal = $('#modal-producto-servicio');
+    const s = id ? window.productosServicios.find((x) => x.id === id) : null;
+    $('#modal-servicio-title').textContent = s ? 'Editar servicio' : 'Nuevo servicio';
+    $('#servicio-id').value = s ? s.id : '';
+    $('#servicio-nombre').value = s ? s.nombre : '';
+    $('#servicio-tipo').value = s ? (s.tipo || 'Mantenimiento Preventivo') : 'Mantenimiento Preventivo';
+    $('#servicio-precio').value = s ? (s.precio || 0) : 0;
+    $('#servicio-activo').checked = s ? !!s.activo : true;
+    modal.classList.remove('hidden');
+    $('#servicio-nombre').focus();
+  }
+  function closeServicioModal() { $('#modal-producto-servicio').classList.add('hidden'); }
+
+  // ============================================================
+  // Módulo COTIZACIONES (tabla real "cotizaciones" + builder de
+  // partidas contra "cotizacion_items")
+  // ============================================================
+  function renderCotizaciones() {
+    const tb = $('#cotizaciones-tbody');
+    if (!tb) return;
+    const rows = window.cotizaciones;
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin cotizaciones</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((c) => {
+      const emp = c.empresas || {};
+      const con = c.contactos || {};
+      return (
+        '<tr class="hover:bg-background/30">' +
+          '<td class="px-4 py-3 font-mono text-xs text-gold">' + (c.folio || '—') + '</td>' +
+          '<td class="px-4 py-3 text-foreground">' + (emp.nombre || '—') + '</td>' +
+          '<td class="px-4 py-3 text-muted-foreground">' + ([con.nombre, con.apellido].filter(Boolean).join(' ') || '—') + '</td>' +
+          '<td class="px-4 py-3">' + estatusCotizacionBadge(c.estatus || 'Borrador') + '</td>' +
+          '<td class="px-4 py-3 font-mono text-foreground">' + fmtMoney(c.total) + '</td>' +
+          '<td class="px-4 py-3 text-muted-foreground">' + (c.fecha_vigencia || '—') + '</td>' +
+          '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+            '<button type="button" data-edit-cotizacion="' + c.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+            '<button type="button" data-del-cotizacion="' + c.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+          '</div></td></tr>'
+      );
+    }).join('');
+    tb.querySelectorAll('[data-edit-cotizacion]').forEach((btn) => btn.addEventListener('click', () => openCotizacionModal(btn.getAttribute('data-edit-cotizacion'))));
+    tb.querySelectorAll('[data-del-cotizacion]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('cotizaciones', btn.getAttribute('data-del-cotizacion'))));
+  }
+  async function loadCotizaciones() {
+    try {
+      window.cotizaciones = await supaFetch('cotizaciones?select=*,empresas(id,nombre),contactos(id,nombre,apellido)&order=fecha_emision.desc', { method: 'GET' });
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.cotizaciones = [];
+      showError('No se pudieron cargar las cotizaciones de Supabase: ' + err.message);
+    }
+    renderCotizaciones();
+    setStats();
+  }
+  function productoCatalogoFor(tipo) {
+    if (tipo === 'maquina') return window.productosMaquinas;
+    if (tipo === 'consumible') return window.productosConsumibles;
+    if (tipo === 'servicio') return window.productosServicios;
+    return [];
+  }
+  function cotizacionItemRowHtml(rowId) {
+    return (
+      '<div class="cotizacion-item-row grid grid-cols-12 items-end gap-2 rounded-lg border border-border bg-background/40 p-3" data-row-id="' + rowId + '">' +
+        '<label class="col-span-6 flex flex-col gap-1 text-xs sm:col-span-2">' +
+          '<span class="font-mono uppercase tracking-wider text-muted-foreground">Tipo</span>' +
+          '<select class="item-tipo h-9 rounded-lg border border-border bg-background/60 px-2 text-xs outline-none focus:border-gold/50">' +
+            '<option value="maquina">Máquina</option>' +
+            '<option value="consumible">Consumible</option>' +
+            '<option value="servicio">Servicio</option>' +
+            '<option value="personalizado">Personalizado</option>' +
+          '</select>' +
+        '</label>' +
+        '<label class="item-producto-wrap col-span-6 flex flex-col gap-1 text-xs sm:col-span-3">' +
+          '<span class="font-mono uppercase tracking-wider text-muted-foreground">Producto</span>' +
+          '<select class="item-producto h-9 rounded-lg border border-border bg-background/60 px-2 text-xs outline-none focus:border-gold/50"></select>' +
+        '</label>' +
+        '<label class="col-span-12 flex flex-col gap-1 text-xs sm:col-span-3">' +
+          '<span class="font-mono uppercase tracking-wider text-muted-foreground">Descripción</span>' +
+          '<input class="item-descripcion h-9 rounded-lg border border-border bg-background/60 px-2 text-xs outline-none focus:border-gold/50" />' +
+        '</label>' +
+        '<label class="col-span-4 flex flex-col gap-1 text-xs sm:col-span-1">' +
+          '<span class="font-mono uppercase tracking-wider text-muted-foreground">Cant.</span>' +
+          '<input type="number" min="0" step="0.01" class="item-cantidad h-9 rounded-lg border border-border bg-background/60 px-2 text-xs outline-none focus:border-gold/50" />' +
+        '</label>' +
+        '<label class="col-span-4 flex flex-col gap-1 text-xs sm:col-span-1">' +
+          '<span class="font-mono uppercase tracking-wider text-muted-foreground">P. unit.</span>' +
+          '<input type="number" min="0" step="0.01" class="item-precio h-9 rounded-lg border border-border bg-background/60 px-2 text-xs outline-none focus:border-gold/50" />' +
+        '</label>' +
+        '<label class="col-span-4 flex flex-col gap-1 text-xs sm:col-span-1">' +
+          '<span class="font-mono uppercase tracking-wider text-muted-foreground">Desc. %</span>' +
+          '<input type="number" min="0" max="100" step="0.01" class="item-descuento h-9 rounded-lg border border-border bg-background/60 px-2 text-xs outline-none focus:border-gold/50" />' +
+        '</label>' +
+        '<div class="col-span-8 flex flex-col gap-1 text-xs sm:col-span-1">' +
+          '<span class="font-mono uppercase tracking-wider text-muted-foreground">Subtotal</span>' +
+          '<p class="item-subtotal-display flex h-9 items-center font-mono text-xs font-semibold text-foreground">$0.00</p>' +
+        '</div>' +
+        '<div class="col-span-4 flex items-end justify-end sm:col-span-12">' +
+          '<button type="button" class="item-remove rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Quitar</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+  function updateCotizacionItemsEmptyState() {
+    const container = $('#cotizacion-items-rows');
+    const empty = $('#cotizacion-items-empty');
+    if (container && empty) empty.classList.toggle('hidden', container.children.length > 0);
+  }
+  function refreshItemProductoOptions(rowEl, selectedProductoId) {
+    const tipoSel = rowEl.querySelector('.item-tipo');
+    const prodSel = rowEl.querySelector('.item-producto');
+    const prodWrap = rowEl.querySelector('.item-producto-wrap');
+    const descInput = rowEl.querySelector('.item-descripcion');
+    const precioInput = rowEl.querySelector('.item-precio');
+    const tipo = tipoSel.value;
+    if (tipo === 'personalizado') {
+      prodWrap.classList.add('hidden');
+      prodSel.innerHTML = '';
+      descInput.readOnly = false;
+      descInput.placeholder = 'Descripción libre';
+      return;
+    }
+    prodWrap.classList.remove('hidden');
+    const catalogo = productoCatalogoFor(tipo).filter((p) => p.activo !== false);
+    prodSel.innerHTML = '<option value="">— Selecciona —</option>' + catalogo.map((p) => '<option value="' + p.id + '">' + p.nombre + '</option>').join('');
+    if (selectedProductoId) prodSel.value = selectedProductoId;
+    descInput.readOnly = true;
+    descInput.placeholder = 'Se autocompleta al elegir producto';
+    const chosen = catalogo.find((p) => p.id === prodSel.value);
+    if (chosen) {
+      descInput.value = chosen.nombre;
+      if (!precioInput.dataset.touched) precioInput.value = chosen.precio || 0;
+    }
+  }
+  function bindCotizacionItemRow(rowEl, item) {
+    item = item || {};
+    const tipoSel = rowEl.querySelector('.item-tipo');
+    const prodSel = rowEl.querySelector('.item-producto');
+    const descInput = rowEl.querySelector('.item-descripcion');
+    const cantInput = rowEl.querySelector('.item-cantidad');
+    const precioInput = rowEl.querySelector('.item-precio');
+    const descuentoInput = rowEl.querySelector('.item-descuento');
+    const removeBtn = rowEl.querySelector('.item-remove');
+    tipoSel.value = item.tipo_producto || 'maquina';
+    cantInput.value = item.cantidad != null ? item.cantidad : 1;
+    precioInput.value = item.precio_unitario != null ? item.precio_unitario : 0;
+    if (item.precio_unitario != null) precioInput.dataset.touched = '1';
+    descuentoInput.value = item.descuento_pct != null ? item.descuento_pct : 0;
+    descInput.value = item.descripcion || '';
+    const selectedProductoId = item.producto_maquina_id || item.producto_consumible_id || item.producto_servicio_id || '';
+    refreshItemProductoOptions(rowEl, selectedProductoId);
+    tipoSel.addEventListener('change', () => {
+      precioInput.dataset.touched = '';
+      refreshItemProductoOptions(rowEl, '');
+      recalcCotizacionTotals();
+    });
+    prodSel.addEventListener('change', () => {
+      precioInput.dataset.touched = '';
+      refreshItemProductoOptions(rowEl, prodSel.value);
+      recalcCotizacionTotals();
+    });
+    precioInput.addEventListener('input', () => { precioInput.dataset.touched = '1'; recalcCotizacionTotals(); });
+    [cantInput, descuentoInput].forEach((inp) => inp.addEventListener('input', recalcCotizacionTotals));
+    descInput.addEventListener('input', recalcCotizacionTotals);
+    removeBtn.addEventListener('click', () => {
+      rowEl.remove();
+      updateCotizacionItemsEmptyState();
+      recalcCotizacionTotals();
+    });
+  }
+  function addCotizacionItemRow(item) {
+    const rowId = 'r' + (cotizacionItemSeq++);
+    const container = $('#cotizacion-items-rows');
+    const wrap = document.createElement('div');
+    wrap.innerHTML = cotizacionItemRowHtml(rowId);
+    const rowEl = wrap.firstElementChild;
+    container.appendChild(rowEl);
+    bindCotizacionItemRow(rowEl, item);
+    updateCotizacionItemsEmptyState();
+  }
+  function recalcCotizacionTotals() {
+    let subtotal = 0;
+    $$('.cotizacion-item-row').forEach((row) => {
+      const cant = Number(row.querySelector('.item-cantidad').value) || 0;
+      const precio = Number(row.querySelector('.item-precio').value) || 0;
+      const desc = Number(row.querySelector('.item-descuento').value) || 0;
+      const lineSubtotal = cant * precio * (1 - desc / 100);
+      row.querySelector('.item-subtotal-display').textContent = fmtMoney(lineSubtotal);
+      subtotal += lineSubtotal;
+    });
+    const descuentoGlobal = Number($('#cot-descuento-pct').value) || 0;
+    const subtotalConDescuento = subtotal * (1 - descuentoGlobal / 100);
+    const iva = subtotalConDescuento * 0.16;
+    const total = subtotalConDescuento + iva;
+    $('#cot-subtotal-display').textContent = fmtMoney(subtotal);
+    $('#cot-iva-display').textContent = fmtMoney(iva);
+    $('#cot-total-display').textContent = fmtMoney(total);
+    return { subtotal: subtotal, iva: iva, total: total, descuentoGlobal: descuentoGlobal };
+  }
+  async function openCotizacionModal(id) {
+    const modal = $('#modal-cotizacion');
+    populateEmpresaSelectEl($('#cot-empresa'));
+    const c = id ? window.cotizaciones.find((x) => x.id === id) : null;
+    $('#modal-cotizacion-title').textContent = c ? 'Editar cotización' : 'Nueva cotización';
+    $('#cot-id').value = c ? c.id : '';
+    $('#cot-folio').value = c ? c.folio : '';
+    if (c) $('#cot-empresa').value = c.empresa_id;
+    else if ($('#cot-empresa').options.length) $('#cot-empresa').selectedIndex = 0;
+    populateContactoSelectEl($('#cot-contacto'), $('#cot-empresa').value, c ? c.contacto_id : '');
+    populateOportunidadSelectEl($('#cot-oportunidad'), $('#cot-empresa').value, c ? c.oportunidad_id : '');
+    $('#cot-estatus').value = c ? (c.estatus || 'Borrador') : 'Borrador';
+    $('#cot-fecha-vigencia').value = c ? (c.fecha_vigencia || '') : '';
+    $('#cot-notas').value = c ? (c.notas || '') : '';
+    $('#cot-descuento-pct').value = c ? (c.descuento_pct || 0) : 0;
+    $('#cotizacion-items-rows').innerHTML = '';
+    cotizacionItemSeq = 0;
+    let items = [];
+    if (c) {
+      try {
+        items = await supaFetch('cotizacion_items?cotizacion_id=eq.' + c.id + '&select=*', { method: 'GET' });
+      } catch (err) {
+        showError('No se pudieron cargar las partidas de la cotización: ' + err.message);
+      }
+    }
+    if (items.length) items.forEach((it) => addCotizacionItemRow(it));
+    else addCotizacionItemRow({});
+    recalcCotizacionTotals();
+    modal.classList.remove('hidden');
+  }
+  function closeCotizacionModal() {
+    $('#modal-cotizacion').classList.add('hidden');
+    $('#cotizacion-items-rows').innerHTML = '';
+    updateCotizacionItemsEmptyState();
+  }
+
+  // ============================================================
+  // Módulo PEDIDOS (tabla real "pedidos", opcionalmente ligado a
+  // una cotización aprobada)
+  // ============================================================
+  function renderPedidos() {
+    const tb = $('#pedidos-tbody');
+    if (!tb) return;
+    const rows = window.pedidos;
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin pedidos</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((p) => {
+      const emp = p.empresas || {};
+      const cot = p.cotizaciones || {};
+      return (
+        '<tr class="hover:bg-background/30">' +
+          '<td class="px-4 py-3 font-mono text-xs text-gold">' + (p.folio || '—') + '</td>' +
+          '<td class="px-4 py-3 text-foreground">' + (emp.nombre || '—') + '</td>' +
+          '<td class="px-4 py-3 text-muted-foreground">' + (cot.folio || '—') + '</td>' +
+          '<td class="px-4 py-3">' + estatusPedidoBadge(p.estatus || 'En Proceso') + '</td>' +
+          '<td class="px-4 py-3 font-mono text-foreground">' + fmtMoney(p.total) + '</td>' +
+          '<td class="px-4 py-3 text-muted-foreground">' + (p.fecha_entrega_estimada || '—') + '</td>' +
+          '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+            '<button type="button" data-edit-pedido="' + p.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+            '<button type="button" data-del-pedido="' + p.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+          '</div></td></tr>'
+      );
+    }).join('');
+    tb.querySelectorAll('[data-edit-pedido]').forEach((btn) => btn.addEventListener('click', () => openPedidoModal(btn.getAttribute('data-edit-pedido'))));
+    tb.querySelectorAll('[data-del-pedido]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('pedidos', btn.getAttribute('data-del-pedido'))));
+  }
+  async function loadPedidos() {
+    try {
+      window.pedidos = await supaFetch('pedidos?select=*,empresas(id,nombre),contactos(id,nombre,apellido),cotizaciones(id,folio,total)&order=fecha_pedido.desc', { method: 'GET' });
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.pedidos = [];
+      showError('No se pudieron cargar los pedidos de Supabase: ' + err.message);
+    }
+    renderPedidos();
+    setStats();
+  }
+  function openPedidoModal(id) {
+    const modal = $('#modal-pedido');
+    populateEmpresaSelectEl($('#ped-empresa'));
+    const p = id ? window.pedidos.find((x) => x.id === id) : null;
+    $('#modal-pedido-title').textContent = p ? 'Editar pedido' : 'Nuevo pedido';
+    $('#ped-id').value = p ? p.id : '';
+    $('#ped-folio').value = p ? p.folio : '';
+    if (p) $('#ped-empresa').value = p.empresa_id;
+    else if ($('#ped-empresa').options.length) $('#ped-empresa').selectedIndex = 0;
+    populateContactoSelectEl($('#ped-contacto'), $('#ped-empresa').value, p ? p.contacto_id : '');
+    populateCotizacionSelectEl($('#ped-cotizacion'), $('#ped-empresa').value, p ? p.cotizacion_id : '');
+    $('#ped-estatus').value = p ? (p.estatus || 'En Proceso') : 'En Proceso';
+    $('#ped-total').value = p ? (p.total || 0) : 0;
+    $('#ped-fecha-entrega').value = p ? (p.fecha_entrega_estimada || '') : '';
+    $('#ped-notas').value = p ? (p.notas || '') : '';
+    modal.classList.remove('hidden');
+    $('#ped-empresa').focus();
+  }
+  function closePedidoModal() { $('#modal-pedido').classList.add('hidden'); }
+
+  // Nota: leads, contactos, cotizaciones, pedidos y productos ya tienen su propia
+  // vista + tabla real (con módulo CRUD dedicado). Solo actividades y calendario
+  // siguen en "En construcción" (#view-actividades, #view-calendario), y el resto
+  // del menú (máquinas, tickets, marketing, reportes, forecast, insights) sigue
+  // cayendo en el sistema genérico #view-lista + LISTAS de abajo.
   const LISTAS = {
     maquinas: { kicker: 'Operación', title: 'Máquinas instaladas', sub: 'Parque instalado por cliente (pendiente conectar tabla maquinas_instaladas)', cols: ['Empresa', 'Zona', 'Máquinas', 'Recompra'], filter: (e) => Number(e.maquinasInstaladas) > 0, row: (e) => [e.nombre, e.zona, String(e.maquinasInstaladas), e.recompra ? 'Sí' : 'No'] },
     tickets: { kicker: 'Operación', title: 'Servicios / Tickets', sub: 'Tickets abiertos (pendiente conectar tabla tickets)', cols: ['Empresa', 'Contacto', 'Tickets', 'Estado'], filter: (e) => Number(e.ticketsAbiertos) > 0, row: (e) => [e.nombre, e.contacto, String(e.ticketsAbiertos), ESTADOS[e.estado]] },
@@ -1377,7 +2267,6 @@
       return [e.nombre, senal, det, ESTADOS[e.estado]];
     } },
   };
-
   function renderLista(key) {
     const cfg = LISTAS[key];
     if (!cfg) return;
@@ -1393,10 +2282,8 @@
     }
     body.innerHTML = rows.map((e) => '<tr class="hover:bg-background/30">' + cfg.row(e).map((cell) => '<td class="px-4 py-3 text-muted-foreground">' + cell + '</td>').join('') + '</tr>').join('');
   }
-
   const NAV_IDLE = 'js-nav group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/80 hover:bg-sidebar-accent/70 hover:text-foreground';
   const NAV_ON = 'js-nav group relative flex w-full items-center gap-3 rounded-lg bg-sidebar-accent px-3 py-2.5 text-sm font-medium text-foreground shadow-inner ring-1 ring-gold/30';
-
   function highlightNav(view) {
     $$('aside button.js-nav').forEach((btn) => {
       const active = btn.getAttribute('data-nav') === view;
@@ -1415,7 +2302,6 @@
       }
     });
   }
-
   // Vistas con contenedor propio (dedicado). Todo lo que NO esté aquí cae
   // en el sistema genérico #view-lista + LISTAS (maquinas, tickets, marketing, etc.)
   const VIEW_IDS = {
@@ -1430,7 +2316,6 @@
     actividades: 'view-actividades',
     calendario: 'view-calendario',
   };
-
   function showView(view) {
     currentView = view;
     Object.values(VIEW_IDS).forEach((id) => {
@@ -1442,7 +2327,6 @@
     const lis = $('#view-lista');
     lis.classList.add('hidden');
     lis.classList.remove('flex');
-
     const directId = VIEW_IDS[view];
     if (directId) {
       const el = document.getElementById(directId);
@@ -1450,6 +2334,9 @@
       el.classList.add('flex');
       if (view === 'leads') renderLeads();
       if (view === 'contactos') renderContactos();
+      if (view === 'productos') renderProductosActive();
+      if (view === 'cotizaciones') renderCotizaciones();
+      if (view === 'pedidos') renderPedidos();
     } else {
       lis.classList.remove('hidden');
       lis.classList.add('flex');
@@ -1457,7 +2344,6 @@
     }
     highlightNav(view);
   }
-
   // 2) CRUD — abrir modal para crear (sin id) o editar (con id de oportunidad)
   function openModal(id) {
     const modal = $('#modal-empresa');
@@ -1477,11 +2363,9 @@
     modal.classList.remove('hidden');
     $('#emp-nombre').focus();
   }
-
   function closeModal() {
     $('#modal-empresa').classList.add('hidden');
   }
-
   // Confirmación de borrado GENERALIZADA (modal propio, sin diálogos nativos del navegador)
   // pendingDelete = { table: 'oportunidades' | 'leads' | 'contactos', id }
   const DELETE_CONFIG = {
@@ -1503,8 +2387,40 @@
       label: (id) => { const c = window.contactos.find((x) => x.id === id); return c ? [c.nombre, c.apellido].filter(Boolean).join(' ') : 'este contacto'; },
       reload: () => loadContactos(),
     },
+    productos_maquinas: {
+      title: 'Eliminar máquina',
+      text: (label) => '¿Eliminar "' + label + '" del catálogo de máquinas? Esta acción no se puede deshacer.',
+      label: (id) => { const m = window.productosMaquinas.find((x) => x.id === id); return m ? m.nombre : 'esta máquina'; },
+      reload: () => loadProductosMaquinas(),
+    },
+    productos_consumibles: {
+      title: 'Eliminar consumible',
+      text: (label) => '¿Eliminar "' + label + '" del catálogo de consumibles? Esta acción no se puede deshacer.',
+      label: (id) => { const c = window.productosConsumibles.find((x) => x.id === id); return c ? c.nombre : 'este consumible'; },
+      reload: () => loadProductosConsumibles(),
+    },
+    productos_servicios: {
+      title: 'Eliminar servicio',
+      text: (label) => '¿Eliminar "' + label + '" del catálogo de servicios? Esta acción no se puede deshacer.',
+      label: (id) => { const s = window.productosServicios.find((x) => x.id === id); return s ? s.nombre : 'este servicio'; },
+      reload: () => loadProductosServicios(),
+    },
+    cotizaciones: {
+      title: 'Eliminar cotización',
+      text: (label) => '¿Eliminar la cotización "' + label + '"? Se eliminarán también sus partidas; esta acción no se puede deshacer.',
+      label: (id) => { const c = window.cotizaciones.find((x) => x.id === id); return c ? c.folio : 'esta cotización'; },
+      preDelete: async (id) => {
+        await supaFetch('cotizacion_items?cotizacion_id=eq.' + id, { method: 'DELETE', headers: { Prefer: 'return=minimal' } });
+      },
+      reload: () => loadCotizaciones(),
+    },
+    pedidos: {
+      title: 'Eliminar pedido',
+      text: (label) => '¿Eliminar el pedido "' + label + '"? Esta acción no se puede deshacer.',
+      label: (id) => { const p = window.pedidos.find((x) => x.id === id); return p ? p.folio : 'este pedido'; },
+      reload: () => loadPedidos(),
+    },
   };
-
   function openConfirmDelete(table, id) {
     const cfg = DELETE_CONFIG[table];
     if (!cfg) return;
@@ -1513,12 +2429,10 @@
     $('#confirm-text').textContent = cfg.text(cfg.label(id));
     $('#modal-confirm').classList.remove('hidden');
   }
-
   function closeConfirmModal() {
     pendingDelete = null;
     $('#modal-confirm').classList.add('hidden');
   }
-
   async function confirmDelete() {
     if (!pendingDelete) return;
     const { table, id } = pendingDelete;
@@ -1528,6 +2442,7 @@
     btn.disabled = true;
     btn.textContent = 'Eliminando…';
     try {
+      if (cfg.preDelete) await cfg.preDelete(id);
       // Para "oportunidades" solo se borra la oportunidad; la empresa y el
       // contacto se conservan (una empresa puede tener más de una oportunidad).
       await supaFetch(table + '?id=eq.' + id, {
@@ -1543,7 +2458,6 @@
       btn.textContent = original;
     }
   }
-
   function renderAll() {
     setStats();
     renderBreakdown('ventasMaquinaria', 'list-maquinaria', 'bar-maquinaria', 'maq-total');
@@ -1555,7 +2469,6 @@
     renderKanban();
     if (LISTAS[currentView]) renderLista(currentView);
   }
-
   // ---- Carga inicial y recarga desde Supabase ----
   async function loadEmpresas() {
     const badge = $('#datos-badge');
@@ -1585,7 +2498,6 @@
     }
     renderAll();
   }
-
   document.addEventListener('click', (ev) => {
     const nav = ev.target.closest('[data-nav]');
     if (nav && nav.classList.contains('js-nav')) {
@@ -1601,18 +2513,47 @@
     }
     if (ev.target.closest('[data-close-confirm]')) closeConfirmModal();
   });
-
   // "+ Nuevo" del topbar es sensible al módulo activo
   $('#btn-nuevo').addEventListener('click', () => {
     if (currentView === 'leads') openLeadModal();
     else if (currentView === 'contactos') openContactoModal();
+    else if (currentView === 'productos') {
+      if (productosSubTab === 'consumibles') openConsumibleModal();
+      else if (productosSubTab === 'servicios') openServicioModal();
+      else openMaquinaModal();
+    } else if (currentView === 'cotizaciones') openCotizacionModal();
+    else if (currentView === 'pedidos') openPedidoModal();
     else openModal();
   });
   $('#btn-nueva-empresa').addEventListener('click', () => openModal());
   $('#btn-nuevo-lead').addEventListener('click', () => openLeadModal());
   $('#btn-nuevo-contacto').addEventListener('click', () => openContactoModal());
+  $('#btn-nuevo-producto').addEventListener('click', () => {
+    if (productosSubTab === 'consumibles') openConsumibleModal();
+    else if (productosSubTab === 'servicios') openServicioModal();
+    else openMaquinaModal();
+  });
+  $$('.js-producto-tab').forEach((btn) => btn.addEventListener('click', () => switchProductosTab(btn.getAttribute('data-producto-tab'))));
+  $('#btn-nueva-cotizacion').addEventListener('click', () => openCotizacionModal());
+  $('#btn-add-item-cotizacion').addEventListener('click', () => { addCotizacionItemRow({}); recalcCotizacionTotals(); });
+  $('#cot-descuento-pct').addEventListener('input', recalcCotizacionTotals);
+  $('#cot-empresa').addEventListener('change', () => {
+    populateContactoSelectEl($('#cot-contacto'), $('#cot-empresa').value, '');
+    populateOportunidadSelectEl($('#cot-oportunidad'), $('#cot-empresa').value, '');
+  });
+  $('#btn-nuevo-pedido').addEventListener('click', () => openPedidoModal());
+  $('#ped-empresa').addEventListener('change', () => {
+    populateContactoSelectEl($('#ped-contacto'), $('#ped-empresa').value, '');
+    populateCotizacionSelectEl($('#ped-cotizacion'), $('#ped-empresa').value, '');
+  });
+  $('#ped-cotizacion').addEventListener('change', () => {
+    const cot = window.cotizaciones.find((c) => c.id === $('#ped-cotizacion').value);
+    if (cot) {
+      $('#ped-total').value = cot.total || 0;
+      if (cot.contacto_id) $('#ped-contacto').value = cot.contacto_id;
+    }
+  });
   $('#btn-confirm-delete').addEventListener('click', confirmDelete);
-
   $('#form-empresa').addEventListener('submit', async (ev) => {
     ev.preventDefault();
     const id = $('#emp-id').value; // id de la OPORTUNIDAD; vacío si es un registro nuevo
@@ -1623,24 +2564,20 @@
     const zona = $('#emp-zona').value.trim();
     const etapa = $('#emp-estado').value;
     const valorEstimado = Number($('#emp-pipeline').value) || 0;
-
     const originalLabel = submitBtn.textContent;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Guardando…';
-
     try {
       if (id) {
         // ---- EDITAR ----
         const emp = window.empresas.find((e) => e.id === id);
         if (!emp) throw new Error('Registro no encontrado');
-
         // 1) Empresa
         await supaFetch('empresas?id=eq.' + emp.empresaId, {
           method: 'PATCH',
           headers: { Prefer: 'return=minimal' },
           body: JSON.stringify({ nombre: nombreEmpresa, zona: zona }),
         });
-
         // 2) Contacto (actualiza el existente o crea uno nuevo si la oportunidad no tenía)
         let contactoId = emp.contactoId;
         if (contactoId) {
@@ -1657,7 +2594,6 @@
           });
           contactoId = creados[0].id;
         }
-
         // 3) Oportunidad
         await supaFetch('oportunidades?id=eq.' + id, {
           method: 'PATCH',
@@ -1672,14 +2608,12 @@
           body: JSON.stringify({ nombre: nombreEmpresa, zona: zona, estatus: 'Prospecto' }),
         });
         const nuevaEmpresa = empresasCreadas[0];
-
         const contactosCreados = await supaFetch('contactos', {
           method: 'POST',
           headers: { Prefer: 'return=representation' },
           body: JSON.stringify({ empresa_id: nuevaEmpresa.id, nombre: nombreContacto, email: emailContacto }),
         });
         const nuevoContacto = contactosCreados[0];
-
         await supaFetch('oportunidades', {
           method: 'POST',
           headers: { Prefer: 'return=minimal' },
@@ -1708,7 +2642,6 @@
       submitBtn.textContent = originalLabel;
     }
   });
-
   $('#form-lead').addEventListener('submit', async (ev) => {
     ev.preventDefault();
     const id = $('#lead-id').value;
@@ -1742,7 +2675,6 @@
       submitBtn.textContent = originalLabel;
     }
   });
-
   $('#form-contacto').addEventListener('submit', async (ev) => {
     ev.preventDefault();
     const id = $('#contacto-id').value;
@@ -1774,14 +2706,204 @@
       submitBtn.textContent = originalLabel;
     }
   });
-
+  $('#form-producto-maquina').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#maquina-id').value;
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const payload = {
+      sku: $('#maquina-sku').value.trim() || null,
+      nombre: $('#maquina-nombre').value.trim(),
+      modelo: $('#maquina-modelo').value.trim() || null,
+      categoria: $('#maquina-categoria').value,
+      descripcion: $('#maquina-descripcion').value.trim() || null,
+      precio: Number($('#maquina-precio').value) || 0,
+      activo: $('#maquina-activo').checked,
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      if (id) {
+        await supaFetch('productos_maquinas?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      } else {
+        await supaFetch('productos_maquinas', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      }
+      closeMaquinaModal();
+      await loadProductosMaquinas();
+    } catch (err) {
+      showError('No se pudo guardar la máquina en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+  $('#form-producto-consumible').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#consumible-id').value;
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const payload = {
+      sku: $('#consumible-sku').value.trim() || null,
+      nombre: $('#consumible-nombre').value.trim(),
+      categoria: $('#consumible-categoria').value,
+      unidad_medida: $('#consumible-unidad').value.trim() || null,
+      precio: Number($('#consumible-precio').value) || 0,
+      activo: $('#consumible-activo').checked,
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      if (id) {
+        await supaFetch('productos_consumibles?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      } else {
+        await supaFetch('productos_consumibles', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      }
+      closeConsumibleModal();
+      await loadProductosConsumibles();
+    } catch (err) {
+      showError('No se pudo guardar el consumible en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+  $('#form-producto-servicio').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#servicio-id').value;
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const payload = {
+      nombre: $('#servicio-nombre').value.trim(),
+      tipo: $('#servicio-tipo').value,
+      precio: Number($('#servicio-precio').value) || 0,
+      activo: $('#servicio-activo').checked,
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      if (id) {
+        await supaFetch('productos_servicios?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      } else {
+        await supaFetch('productos_servicios', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      }
+      closeServicioModal();
+      await loadProductosServicios();
+    } catch (err) {
+      showError('No se pudo guardar el servicio en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+  $('#form-cotizacion').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#cot-id').value;
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const rows = $$('.cotizacion-item-row');
+    if (!rows.length) {
+      showError('Agrega al menos una partida antes de guardar la cotización.');
+      return;
+    }
+    const itemsPayload = [];
+    for (const row of rows) {
+      const tipo = row.querySelector('.item-tipo').value;
+      const prodSel = row.querySelector('.item-producto');
+      const descripcion = row.querySelector('.item-descripcion').value.trim();
+      const cantidad = Number(row.querySelector('.item-cantidad').value) || 0;
+      const precio_unitario = Number(row.querySelector('.item-precio').value) || 0;
+      const descuento_pct = Number(row.querySelector('.item-descuento').value) || 0;
+      if (!descripcion) {
+        showError('Cada partida necesita una descripción (se autocompleta al elegir un producto).');
+        return;
+      }
+      itemsPayload.push({
+        tipo_producto: tipo,
+        descripcion: descripcion,
+        cantidad: cantidad,
+        precio_unitario: precio_unitario,
+        descuento_pct: descuento_pct,
+        subtotal: cantidad * precio_unitario * (1 - descuento_pct / 100),
+        producto_maquina_id: tipo === 'maquina' ? (prodSel.value || null) : null,
+        producto_consumible_id: tipo === 'consumible' ? (prodSel.value || null) : null,
+        producto_servicio_id: tipo === 'servicio' ? (prodSel.value || null) : null,
+      });
+    }
+    const totals = recalcCotizacionTotals();
+    const headerPayload = {
+      empresa_id: $('#cot-empresa').value,
+      contacto_id: $('#cot-contacto').value || null,
+      oportunidad_id: $('#cot-oportunidad').value || null,
+      estatus: $('#cot-estatus').value,
+      subtotal: totals.subtotal,
+      descuento_pct: totals.descuentoGlobal,
+      iva: totals.iva,
+      total: totals.total,
+      fecha_vigencia: $('#cot-fecha-vigencia').value || null,
+      notas: $('#cot-notas').value.trim() || null,
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      let cotizacionId = id;
+      if (id) {
+        await supaFetch('cotizaciones?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(headerPayload) });
+        // Reemplazamos todas las partidas: se borran las existentes y se insertan las actuales del builder.
+        await supaFetch('cotizacion_items?cotizacion_id=eq.' + id, { method: 'DELETE', headers: { Prefer: 'return=minimal' } });
+      } else {
+        headerPayload.folio = nextFolio(window.cotizaciones, 'COT');
+        const creadas = await supaFetch('cotizaciones', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(headerPayload) });
+        cotizacionId = creadas[0].id;
+      }
+      const itemsConCotizacion = itemsPayload.map((it) => Object.assign({ cotizacion_id: cotizacionId }, it));
+      await supaFetch('cotizacion_items', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(itemsConCotizacion) });
+      closeCotizacionModal();
+      await loadCotizaciones();
+    } catch (err) {
+      showError('No se pudo guardar la cotización en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+  $('#form-pedido').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#ped-id').value;
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const payload = {
+      empresa_id: $('#ped-empresa').value,
+      contacto_id: $('#ped-contacto').value || null,
+      cotizacion_id: $('#ped-cotizacion').value || null,
+      estatus: $('#ped-estatus').value,
+      total: Number($('#ped-total').value) || 0,
+      fecha_entrega_estimada: $('#ped-fecha-entrega').value || null,
+      notas: $('#ped-notas').value.trim() || null,
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      if (id) {
+        await supaFetch('pedidos?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      } else {
+        payload.folio = nextFolio(window.pedidos, 'PED');
+        await supaFetch('pedidos', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      }
+      closePedidoModal();
+      await loadPedidos();
+    } catch (err) {
+      showError('No se pudo guardar el pedido en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
   $('#global-search').addEventListener('input', (ev) => {
     searchQuery = ev.target.value.trim();
     renderEmpresas();
     renderKanban();
     if (LISTAS[currentView]) renderLista(currentView);
   });
-
   document.addEventListener('keydown', (ev) => {
     if (ev.key === '/' && ev.target.tagName !== 'INPUT' && ev.target.tagName !== 'TEXTAREA' && ev.target.tagName !== 'SELECT') {
       ev.preventDefault();
@@ -1792,17 +2914,24 @@
       closeLeadModal();
       closeContactoModal();
       closeConfirmModal();
+      closeMaquinaModal();
+      closeConsumibleModal();
+      closeServicioModal();
+      closeCotizacionModal();
+      closePedidoModal();
     }
   });
-
   // 3) Kanban Drag & Drop
   bindKanbanDnd();
-
+  switchProductosTab('maquinas'); // deja la sub-pestaña "Máquinas" activa por defecto
   showView('dashboard');
   loadEmpresas(); // empresas + oportunidades (módulo ya existente)
   loadLeads(); // fase 1: módulo Leads real
   loadContactos(); // fase 1: módulo Contactos real
   loadEmpresasCatalogo(); // catálogo para el <select> de empresa del modal de contactos
+  loadProductosCatalogos(); // fase 2: catálogos de máquinas, consumibles y servicios
+  loadCotizaciones(); // fase 2: módulo Cotizaciones real (+ cotizacion_items)
+  loadPedidos(); // fase 2: módulo Pedidos real
 })();
 </script>
 </body>
