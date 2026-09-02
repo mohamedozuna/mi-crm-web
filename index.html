@@ -150,6 +150,7 @@
             <button type="button" data-nav="actividades" class="js-nav group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/80 hover:bg-sidebar-accent/70 hover:text-foreground">
               <svg class="icon size-5 text-sidebar-foreground/70 group-hover:text-gold" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
               <span class="flex-1 truncate text-left">Actividades</span>
+              <span data-badge="actividades" class="grid h-5 min-w-5 place-items-center rounded-full bg-gold/15 px-1.5 font-mono text-[11px] font-semibold text-gold">0</span>
             </button>
           </li>
           <li>
@@ -668,29 +669,73 @@
         </div>
       </section>
       <section id="view-actividades" class="hidden flex-col gap-6">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
-          <h2 class="text-base font-semibold text-foreground">Actividades</h2>
-        </div>
-        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
-          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
-            <svg class="icon size-7" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
+            <h2 class="text-base font-semibold text-foreground">Actividades</h2>
+            <p class="text-sm text-muted-foreground">Llamadas, correos, reuniones, visitas, notas y tareas — tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">actividades</code> en Supabase</p>
           </div>
-          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
-          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">actividades</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+          <button type="button" id="btn-nueva-actividad" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
+            <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            Nueva actividad
+          </button>
+        </div>
+        <div class="flex items-center gap-1 border-b border-border">
+          <button type="button" data-actividad-filter="todas" class="js-actividad-filter border-b-2 border-gold px-4 py-2.5 text-sm font-medium text-gold">Todas</button>
+          <button type="button" data-actividad-filter="pendientes" class="js-actividad-filter border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground">Pendientes</button>
+          <button type="button" data-actividad-filter="completadas" class="js-actividad-filter border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground">Completadas</button>
+        </div>
+        <div class="card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Tipo</th>
+                  <th class="px-4 py-3 font-medium">Título</th>
+                  <th class="px-4 py-3 font-medium">Relacionado con</th>
+                  <th class="px-4 py-3 font-medium">Programada</th>
+                  <th class="px-4 py-3 font-medium">Estatus</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="actividades-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
         </div>
       </section>
       <section id="view-calendario" class="hidden flex-col gap-6">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
-          <h2 class="text-base font-semibold text-foreground">Calendario</h2>
-        </div>
-        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
-          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
-            <svg class="icon size-7" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
+            <h2 class="text-base font-semibold text-foreground">Calendario</h2>
+            <p class="text-sm text-muted-foreground">Vista de <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">actividades</code> por fecha — usa su vencimiento programado, o la fecha del registro si no tiene</p>
           </div>
-          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
-          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: definir y conectar la tabla de eventos/calendario en Supabase. Pídemelo cuando quieras avanzar.</p>
+          <button type="button" id="btn-nueva-actividad-cal" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
+            <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            Nueva actividad
+          </button>
+        </div>
+        <div class="card-satin flex flex-wrap items-center gap-3 rounded-xl border border-border p-3 shadow-lg shadow-black/20">
+          <div class="flex items-center gap-1">
+            <button type="button" id="btn-cal-prev" class="grid size-9 place-items-center rounded-lg border border-border text-muted-foreground hover:border-gold/40 hover:text-gold" aria-label="Anterior">
+              <svg class="icon size-4" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button type="button" id="btn-cal-hoy" class="rounded-lg border border-border px-3 py-2 text-xs font-medium text-muted-foreground hover:border-gold/40 hover:text-gold">Hoy</button>
+            <button type="button" id="btn-cal-next" class="grid size-9 place-items-center rounded-lg border border-border text-muted-foreground hover:border-gold/40 hover:text-gold" aria-label="Siguiente">
+              <svg class="icon size-4" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <h3 id="calendario-label" class="min-w-[10rem] flex-1 text-sm font-semibold capitalize text-foreground">—</h3>
+          <div class="flex items-center gap-1 rounded-lg border border-border p-1">
+            <button type="button" data-cal-view="mes" class="js-cal-view rounded-md bg-gold px-3 py-1.5 text-xs font-semibold text-primary-foreground">Mes</button>
+            <button type="button" data-cal-view="semana" class="js-cal-view rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground">Semana</button>
+          </div>
+        </div>
+        <div class="card-satin rounded-xl border border-border p-3 shadow-lg shadow-black/20">
+          <div id="calendario-weekdays" class="mb-2 grid grid-cols-7 gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            <span class="px-1">Lun</span><span class="px-1">Mar</span><span class="px-1">Mié</span><span class="px-1">Jue</span><span class="px-1">Vie</span><span class="px-1">Sáb</span><span class="px-1">Dom</span>
+          </div>
+          <div id="calendario-grid" class="grid grid-cols-7 gap-2"></div>
         </div>
       </section>
     </main>
@@ -1220,6 +1265,81 @@
     </form>
   </div>
 </div>
+<!-- Modal Actividad -->
+<div id="modal-actividad" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-8 w-full max-w-lg max-h-[88vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Operación · Actividad</p>
+        <h2 id="modal-actividad-title" class="text-base font-semibold text-foreground">Nueva actividad</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-actividad" class="flex flex-col gap-3">
+      <input type="hidden" id="actividad-id" />
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Tipo</span>
+          <select id="actividad-tipo" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Llamada">Llamada</option>
+            <option value="Correo">Correo</option>
+            <option value="Reunión">Reunión</option>
+            <option value="Visita">Visita</option>
+            <option value="Nota" selected>Nota</option>
+            <option value="Tarea">Tarea</option>
+          </select>
+        </label>
+        <label class="flex items-center gap-2 self-end pb-2 text-sm">
+          <input type="checkbox" id="actividad-completada" class="size-4 rounded border-border accent-gold" />
+          <span class="text-muted-foreground">Completada</span>
+        </label>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Relacionado con</span>
+          <select id="actividad-relacionado-tipo" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="empresa">Empresa</option>
+            <option value="contacto">Contacto</option>
+            <option value="lead">Lead</option>
+            <option value="oportunidad">Oportunidad</option>
+            <option value="cotizacion">Cotización</option>
+            <option value="pedido">Pedido</option>
+            <option value="ticket">Ticket</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Registro</span>
+          <select required id="actividad-relacionado-id" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></select>
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Título</span>
+        <input required id="actividad-titulo" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+      </label>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Descripción</span>
+        <textarea id="actividad-descripcion" rows="2" class="rounded-lg border border-border bg-background/40 px-3 py-2 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></textarea>
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Fecha del registro</span>
+          <input type="datetime-local" id="actividad-fecha" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Vencimiento / agenda</span>
+          <input type="datetime-local" id="actividad-vencimiento" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
 <!-- Modal Confirmación de borrado -->
 <div id="modal-confirm" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-confirm></div>
@@ -1334,11 +1454,16 @@
   window.productosServicios = []; // se llena desde Supabase vía loadProductosServicios() (tabla productos_servicios)
   window.cotizaciones = []; // se llena desde Supabase vía loadCotizaciones() (tabla cotizaciones)
   window.pedidos = []; // se llena desde Supabase vía loadPedidos() (tabla pedidos)
+  window.actividades = []; // se llena desde Supabase vía loadActividades() (tabla actividades)
+  window.ticketsCatalogo = []; // catálogo ligero {id,folio,asunto} solo para el selector "Relacionado con" de actividades
   let currentView = 'dashboard';
   let searchQuery = '';
-  let pendingDelete = null; // { table: 'oportunidades' | 'leads' | 'contactos' | 'productos_maquinas' | 'productos_consumibles' | 'productos_servicios' | 'cotizaciones' | 'pedidos', id }
+  let pendingDelete = null; // { table: 'oportunidades' | 'leads' | 'contactos' | 'productos_maquinas' | 'productos_consumibles' | 'productos_servicios' | 'cotizaciones' | 'pedidos' | 'actividades', id }
   let productosSubTab = 'maquinas'; // 'maquinas' | 'consumibles' | 'servicios'
   let cotizacionItemSeq = 0; // contador local de filas del builder de partidas (no es id de BD)
+  let actividadFiltro = 'todas'; // 'todas' | 'pendientes' | 'completadas'
+  let calendarViewMode = 'mes'; // 'mes' | 'semana'
+  let calendarCursor = new Date(); // fecha de referencia que navega el calendario
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
   function moneyK(n) {
@@ -1386,6 +1511,18 @@
     // (fase Cotizaciones + Pedidos), no del arreglo derivado de oportunidades.
     const cotizacionesVivas = (window.cotizaciones || []).filter((c) => ['Borrador', 'Enviada', 'Aprobada'].includes(c.estatus)).length;
     const pedidosEnProceso = (window.pedidos || []).filter((p) => p.estatus === 'En Proceso').length;
+    // Visitas de la semana / seguimientos vencidos ahora leen de la tabla real
+    // "actividades" (fase Actividades + Calendario), no de campos sintéticos.
+    const actividadesPendientes = (window.actividades || []).filter((a) => !a.completada);
+    const now = new Date();
+    const weekStart = startOfWeekMonday(now);
+    const weekEnd = addDays(weekStart, 7);
+    const visitasSemana = (window.actividades || []).filter((a) => {
+      if (a.tipo !== 'Visita' && a.tipo !== 'Reunión') return false;
+      const d = a.fecha_vencimiento ? new Date(a.fecha_vencimiento) : (a.fecha ? new Date(a.fecha) : null);
+      return d && d >= weekStart && d < weekEnd;
+    }).length;
+    const actividadesVencidas = actividadesPendientes.filter((a) => a.fecha_vencimiento && new Date(a.fecha_vencimiento) < now).length;
     return {
       leads: leadsActivosCount(), // viene de la tabla real "leads", no de oportunidades en etapa "prospecto"
       empresas: rows.length,
@@ -1395,14 +1532,15 @@
       maquinas: rows.reduce((s, e) => s + Number(e.maquinasInstaladas || 0), 0),
       recompras: rows.filter((e) => e.recompra).length,
       tickets: rows.reduce((s, e) => s + Number(e.ticketsAbiertos || 0), 0),
+      actividades: actividadesPendientes.length,
       pipeline,
       ponderado,
       cerradas,
       conversion,
       ganadas: ganadas.length,
       perdidas: perdidas.length,
-      visitas: rows.filter((e) => e.visitaSemana).length,
-      vencidos: rows.filter((e) => Number(e.diasSinActividad) >= 7).length,
+      visitas: visitasSemana,
+      vencidos: actividadesVencidas,
     };
   }
   function setStats() {
@@ -1422,6 +1560,7 @@
     $$('[data-badge="tickets"]').forEach((el) => { el.textContent = s.tickets; });
     $$('[data-badge="cotizaciones"]').forEach((el) => { el.textContent = s.cotizaciones; });
     $$('[data-badge="pedidos"]').forEach((el) => { el.textContent = s.pedidos; });
+    $$('[data-badge="actividades"]').forEach((el) => { el.textContent = s.actividades; });
     const ring = $('#conversion-ring');
     if (ring) ring.style.background = 'conic-gradient(var(--gold) ' + s.conversion + '%, oklch(1 0 0 / 12%) 0)';
   }
@@ -1480,6 +1619,13 @@
       }
       if (Number(e.diasSinActividad) >= 5) {
         items.push({ title: 'Oportunidad sin actividad', detail: e.nombre + ' · ' + e.diasSinActividad + ' días sin seguimiento', warn: true });
+      }
+    });
+    // Actividades vencidas (tabla real "actividades"): pendientes cuya fecha de vencimiento ya pasó.
+    const ahoraAlertas = new Date();
+    (window.actividades || []).forEach((a) => {
+      if (!a.completada && a.fecha_vencimiento && new Date(a.fecha_vencimiento) < ahoraAlertas) {
+        items.push({ title: 'Actividad vencida', detail: a.titulo + ' · vencía el ' + new Date(a.fecha_vencimiento).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }), warn: true });
       }
     });
     if (!items.length) {
@@ -2246,11 +2392,264 @@
   }
   function closePedidoModal() { $('#modal-pedido').classList.add('hidden'); }
 
-  // Nota: leads, contactos, cotizaciones, pedidos y productos ya tienen su propia
-  // vista + tabla real (con módulo CRUD dedicado). Solo actividades y calendario
-  // siguen en "En construcción" (#view-actividades, #view-calendario), y el resto
-  // del menú (máquinas, tickets, marketing, reportes, forecast, insights) sigue
-  // cayendo en el sistema genérico #view-lista + LISTAS de abajo.
+  // ============================================================
+  // Helpers de fecha compartidos por Actividades y Calendario
+  // ============================================================
+  function startOfWeekMonday(date) {
+    const d = new Date(date);
+    const day = d.getDay(); // 0 domingo .. 6 sábado
+    const diff = (day === 0 ? -6 : 1) - day; // desplaza al lunes de esa semana
+    d.setDate(d.getDate() + diff);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+  function addDays(date, n) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + n);
+    return d;
+  }
+  function sameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+  function ymd(date) {
+    return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+  }
+  function toDatetimeLocalValue(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    const pad = (n) => String(n).padStart(2, '0');
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function datetimeLocalToIso(value) {
+    return value ? new Date(value).toISOString() : null;
+  }
+
+  // ============================================================
+  // Módulo ACTIVIDADES (tabla real "actividades", con relación
+  // polimórfica relacionado_tipo/relacionado_id sin FK real)
+  // ============================================================
+  const RELACIONADO_LABELS = { lead: 'Lead', empresa: 'Empresa', contacto: 'Contacto', oportunidad: 'Oportunidad', cotizacion: 'Cotización', pedido: 'Pedido', ticket: 'Ticket' };
+  function relacionadoCatalogFor(tipo) {
+    if (tipo === 'lead') return window.leads.map((l) => ({ id: l.id, label: l.nombre }));
+    if (tipo === 'empresa') return window.empresasCatalogo.map((e) => ({ id: e.id, label: e.nombre }));
+    if (tipo === 'contacto') return window.contactos.map((c) => ({ id: c.id, label: [c.nombre, c.apellido].filter(Boolean).join(' ') }));
+    if (tipo === 'oportunidad') return window.empresas.map((e) => ({ id: e.id, label: e.nombre + ' · ' + moneyK(e.pipeline) }));
+    if (tipo === 'cotizacion') return window.cotizaciones.map((c) => ({ id: c.id, label: c.folio }));
+    if (tipo === 'pedido') return window.pedidos.map((p) => ({ id: p.id, label: p.folio }));
+    if (tipo === 'ticket') return window.ticketsCatalogo.map((t) => ({ id: t.id, label: t.folio + (t.asunto ? ' · ' + t.asunto : '') }));
+    return [];
+  }
+  function relacionadoLabel(a) {
+    const catalogo = relacionadoCatalogFor(a.relacionado_tipo);
+    const encontrado = catalogo.find((x) => x.id === a.relacionado_id);
+    const tipoLabel = RELACIONADO_LABELS[a.relacionado_tipo] || a.relacionado_tipo || '—';
+    return tipoLabel + (encontrado ? ' · ' + encontrado.label : ' · (registro no encontrado)');
+  }
+  function tipoActividadBadge(tipo) {
+    const map = { Llamada: 'text-chart-2 bg-chart-2/15', Correo: 'text-chart-3 bg-chart-3/15', 'Reunión': 'text-gold bg-gold/15', Visita: 'text-gold bg-gold/15', Nota: 'text-muted-foreground bg-border/40', Tarea: 'text-destructive bg-destructive/15' };
+    return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[tipo] || '') + '">' + tipo + '</span>';
+  }
+  function estatusActividadBadge(a) {
+    if (a.completada) return '<span class="rounded-full bg-chart-3/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-chart-3">Completada</span>';
+    if (a.fecha_vencimiento && new Date(a.fecha_vencimiento) < new Date()) return '<span class="rounded-full bg-destructive/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-destructive">Vencida</span>';
+    return '<span class="rounded-full bg-gold/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-gold">Pendiente</span>';
+  }
+  function actividadesFiltradas() {
+    if (actividadFiltro === 'pendientes') return window.actividades.filter((a) => !a.completada);
+    if (actividadFiltro === 'completadas') return window.actividades.filter((a) => a.completada);
+    return window.actividades;
+  }
+  function renderActividades() {
+    const tb = $('#actividades-tbody');
+    if (!tb) return;
+    const rows = actividadesFiltradas();
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin actividades</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((a) => {
+      const fechaProgramada = a.fecha_vencimiento || a.fecha;
+      const fechaTexto = fechaProgramada ? new Date(fechaProgramada).toLocaleString('es-MX', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
+      return (
+        '<tr class="hover:bg-background/30">' +
+          '<td class="px-4 py-3">' + tipoActividadBadge(a.tipo || 'Nota') + '</td>' +
+          '<td class="px-4 py-3"><p class="font-medium text-foreground">' + a.titulo + '</p></td>' +
+          '<td class="px-4 py-3 text-muted-foreground">' + relacionadoLabel(a) + '</td>' +
+          '<td class="px-4 py-3 text-muted-foreground">' + fechaTexto + '</td>' +
+          '<td class="px-4 py-3">' + estatusActividadBadge(a) + '</td>' +
+          '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+            '<button type="button" data-toggle-actividad="' + a.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-chart-3/50 hover:text-chart-3">' + (a.completada ? 'Reabrir' : 'Completar') + '</button>' +
+            '<button type="button" data-edit-actividad="' + a.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+            '<button type="button" data-del-actividad="' + a.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+          '</div></td></tr>'
+      );
+    }).join('');
+    tb.querySelectorAll('[data-edit-actividad]').forEach((btn) => btn.addEventListener('click', () => openActividadModal(btn.getAttribute('data-edit-actividad'))));
+    tb.querySelectorAll('[data-del-actividad]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('actividades', btn.getAttribute('data-del-actividad'))));
+    tb.querySelectorAll('[data-toggle-actividad]').forEach((btn) => btn.addEventListener('click', () => toggleActividadCompletada(btn.getAttribute('data-toggle-actividad'))));
+  }
+  async function loadActividades() {
+    try {
+      window.actividades = await supaFetch('actividades?select=*&order=fecha_vencimiento.asc.nullslast,fecha.desc', { method: 'GET' });
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.actividades = [];
+      showError('No se pudieron cargar las actividades de Supabase: ' + err.message);
+    }
+    renderActividades();
+    renderCalendar();
+    setStats();
+  }
+  async function loadTicketsCatalogo() {
+    try {
+      window.ticketsCatalogo = await supaFetch('tickets?select=id,folio,asunto&order=fecha_apertura.desc', { method: 'GET' });
+    } catch (err) {
+      console.error(err);
+      window.ticketsCatalogo = [];
+    }
+  }
+  async function toggleActividadCompletada(id) {
+    const a = window.actividades.find((x) => x.id === id);
+    if (!a) return;
+    try {
+      await supaFetch('actividades?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ completada: !a.completada }) });
+      await loadActividades();
+    } catch (err) {
+      showError('No se pudo actualizar la actividad en Supabase: ' + err.message);
+    }
+  }
+  function switchActividadFiltro(filtro) {
+    actividadFiltro = filtro;
+    $$('.js-actividad-filter').forEach((btn) => {
+      const active = btn.getAttribute('data-actividad-filter') === filtro;
+      btn.className = 'js-actividad-filter border-b-2 px-4 py-2.5 text-sm font-medium ' + (active ? 'border-gold text-gold' : 'border-transparent text-muted-foreground hover:text-foreground');
+    });
+    renderActividades();
+  }
+  function populateRelacionadoSelect(tipo, selectedId) {
+    const sel = $('#actividad-relacionado-id');
+    if (!sel) return;
+    const rows = relacionadoCatalogFor(tipo);
+    sel.innerHTML = rows.length
+      ? rows.map((r) => '<option value="' + r.id + '">' + r.label + '</option>').join('')
+      : '<option value="">— Sin registros disponibles —</option>';
+    if (selectedId) sel.value = selectedId;
+  }
+  function openActividadModal(id, prefillVencimiento) {
+    const modal = $('#modal-actividad');
+    const a = id ? window.actividades.find((x) => x.id === id) : null;
+    $('#modal-actividad-title').textContent = a ? 'Editar actividad' : 'Nueva actividad';
+    $('#actividad-id').value = a ? a.id : '';
+    $('#actividad-tipo').value = a ? (a.tipo || 'Nota') : 'Nota';
+    $('#actividad-completada').checked = a ? !!a.completada : false;
+    $('#actividad-relacionado-tipo').value = a ? (a.relacionado_tipo || 'empresa') : 'empresa';
+    populateRelacionadoSelect($('#actividad-relacionado-tipo').value, a ? a.relacionado_id : '');
+    $('#actividad-titulo').value = a ? a.titulo : '';
+    $('#actividad-descripcion').value = a ? (a.descripcion || '') : '';
+    $('#actividad-fecha').value = a ? toDatetimeLocalValue(a.fecha) : toDatetimeLocalValue(new Date().toISOString());
+    $('#actividad-vencimiento').value = a ? toDatetimeLocalValue(a.fecha_vencimiento) : (prefillVencimiento || '');
+    modal.classList.remove('hidden');
+    $('#actividad-titulo').focus();
+  }
+  function closeActividadModal() {
+    $('#modal-actividad').classList.add('hidden');
+  }
+
+  // ============================================================
+  // Módulo CALENDARIO (vista mensual/semanal sobre "actividades",
+  // sin tabla propia — usa fecha_vencimiento, o fecha si no tiene)
+  // ============================================================
+  function activityDateObj(a) {
+    const iso = a.fecha_vencimiento || a.fecha;
+    return iso ? new Date(iso) : null;
+  }
+  function actividadesPorDia() {
+    const map = {};
+    window.actividades.forEach((a) => {
+      const d = activityDateObj(a);
+      if (!d) return;
+      const key = ymd(d);
+      (map[key] = map[key] || []).push(a);
+    });
+    Object.values(map).forEach((list) => list.sort((x, y) => activityDateObj(x) - activityDateObj(y)));
+    return map;
+  }
+  function switchCalendarView(mode) {
+    calendarViewMode = mode;
+    $$('.js-cal-view').forEach((btn) => {
+      const active = btn.getAttribute('data-cal-view') === mode;
+      btn.className = 'js-cal-view rounded-md px-3 py-1.5 text-xs font-medium ' + (active ? 'bg-gold text-primary-foreground font-semibold' : 'text-muted-foreground hover:text-foreground');
+    });
+    renderCalendar();
+  }
+  function calendarNav(delta) {
+    if (calendarViewMode === 'semana') calendarCursor = addDays(calendarCursor, delta * 7);
+    else calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() + delta, 1);
+    renderCalendar();
+  }
+  function calendarToday() {
+    calendarCursor = new Date();
+    renderCalendar();
+  }
+  function renderCalendar() {
+    const grid = $('#calendario-grid');
+    const label = $('#calendario-label');
+    if (!grid || !label) return;
+    const map = actividadesPorDia();
+    const today = new Date();
+    let days = [];
+    if (calendarViewMode === 'semana') {
+      const start = startOfWeekMonday(calendarCursor);
+      for (let i = 0; i < 7; i++) days.push(addDays(start, i));
+      label.textContent = days[0].toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) + ' – ' + days[6].toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+      grid.className = 'grid grid-cols-7 gap-2';
+    } else {
+      const monthStart = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth(), 1);
+      const gridStart = startOfWeekMonday(monthStart);
+      for (let i = 0; i < 42; i++) days.push(addDays(gridStart, i));
+      label.textContent = monthStart.toLocaleDateString('es-MX', { month: 'long', year: 'numeric' });
+      grid.className = 'grid grid-cols-7 gap-2';
+    }
+    grid.innerHTML = days.map((d) => {
+      const key = ymd(d);
+      const events = map[key] || [];
+      const inRange = calendarViewMode === 'semana' || d.getMonth() === calendarCursor.getMonth();
+      const isToday = sameDay(d, today);
+      const minHeight = calendarViewMode === 'semana' ? 'min-h-[220px]' : 'min-h-[104px]';
+      const chips = events.slice(0, calendarViewMode === 'semana' ? 20 : 3).map((a) => {
+        const map2 = { Llamada: 'bg-chart-2', Correo: 'bg-chart-3', 'Reunión': 'bg-gold', Visita: 'bg-gold', Nota: 'bg-border', Tarea: 'bg-destructive' };
+        const dotColor = map2[a.tipo] || 'bg-border';
+        const hora = activityDateObj(a) ? activityDateObj(a).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) : '';
+        return (
+          '<button type="button" data-open-actividad="' + a.id + '" class="flex w-full items-center gap-1.5 truncate rounded-md bg-background/60 px-1.5 py-1 text-left text-[11px] ' + (a.completada ? 'opacity-50 line-through' : '') + ' hover:bg-background/90">' +
+            '<span class="size-1.5 shrink-0 rounded-full ' + dotColor + '"></span>' +
+            '<span class="truncate text-foreground">' + (hora ? hora + ' · ' : '') + a.titulo + '</span>' +
+          '</button>'
+        );
+      }).join('');
+      const extra = events.length > 3 && calendarViewMode === 'mes' ? '<p class="px-1 text-[10px] text-muted-foreground">+' + (events.length - 3) + ' más</p>' : '';
+      return (
+        '<div class="' + minHeight + ' flex flex-col gap-1 rounded-lg border p-2 ' + (inRange ? 'border-border bg-background/40' : 'border-border/50 bg-background/10 opacity-50') + ' ' + (isToday ? 'ring-1 ring-gold/60' : '') + '">' +
+          '<div class="flex items-center justify-between">' +
+            '<span class="font-mono text-xs ' + (isToday ? 'font-bold text-gold' : 'text-muted-foreground') + '">' + d.getDate() + '</span>' +
+            '<button type="button" data-add-day="' + key + '" class="grid size-5 place-items-center rounded text-muted-foreground hover:bg-gold/15 hover:text-gold" aria-label="Agregar actividad">' +
+              '<svg class="icon size-3.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>' +
+            '</button>' +
+          '</div>' +
+          '<div class="flex flex-col gap-1">' + chips + extra + '</div>' +
+        '</div>'
+      );
+    }).join('');
+    grid.querySelectorAll('[data-open-actividad]').forEach((btn) => btn.addEventListener('click', () => openActividadModal(btn.getAttribute('data-open-actividad'))));
+    grid.querySelectorAll('[data-add-day]').forEach((btn) => btn.addEventListener('click', () => openActividadModal(null, btn.getAttribute('data-add-day') + 'T09:00')));
+  }
+
+  // Nota: leads, contactos, cotizaciones, pedidos, productos, actividades y
+  // calendario ya tienen su propia vista + tabla real (con módulo CRUD
+  // dedicado). Solo el resto del menú (máquinas, tickets, marketing,
+  // reportes, forecast, insights) sigue cayendo en el sistema genérico
+  // #view-lista + LISTAS de abajo.
   const LISTAS = {
     maquinas: { kicker: 'Operación', title: 'Máquinas instaladas', sub: 'Parque instalado por cliente (pendiente conectar tabla maquinas_instaladas)', cols: ['Empresa', 'Zona', 'Máquinas', 'Recompra'], filter: (e) => Number(e.maquinasInstaladas) > 0, row: (e) => [e.nombre, e.zona, String(e.maquinasInstaladas), e.recompra ? 'Sí' : 'No'] },
     tickets: { kicker: 'Operación', title: 'Servicios / Tickets', sub: 'Tickets abiertos (pendiente conectar tabla tickets)', cols: ['Empresa', 'Contacto', 'Tickets', 'Estado'], filter: (e) => Number(e.ticketsAbiertos) > 0, row: (e) => [e.nombre, e.contacto, String(e.ticketsAbiertos), ESTADOS[e.estado]] },
@@ -2337,6 +2736,8 @@
       if (view === 'productos') renderProductosActive();
       if (view === 'cotizaciones') renderCotizaciones();
       if (view === 'pedidos') renderPedidos();
+      if (view === 'actividades') renderActividades();
+      if (view === 'calendario') renderCalendar();
     } else {
       lis.classList.remove('hidden');
       lis.classList.add('flex');
@@ -2419,6 +2820,12 @@
       text: (label) => '¿Eliminar el pedido "' + label + '"? Esta acción no se puede deshacer.',
       label: (id) => { const p = window.pedidos.find((x) => x.id === id); return p ? p.folio : 'este pedido'; },
       reload: () => loadPedidos(),
+    },
+    actividades: {
+      title: 'Eliminar actividad',
+      text: (label) => '¿Eliminar la actividad "' + label + '"? Esta acción no se puede deshacer.',
+      label: (id) => { const a = window.actividades.find((x) => x.id === id); return a ? a.titulo : 'esta actividad'; },
+      reload: () => loadActividades(),
     },
   };
   function openConfirmDelete(table, id) {
@@ -2523,6 +2930,7 @@
       else openMaquinaModal();
     } else if (currentView === 'cotizaciones') openCotizacionModal();
     else if (currentView === 'pedidos') openPedidoModal();
+    else if (currentView === 'actividades' || currentView === 'calendario') openActividadModal();
     else openModal();
   });
   $('#btn-nueva-empresa').addEventListener('click', () => openModal());
@@ -2542,6 +2950,14 @@
     populateOportunidadSelectEl($('#cot-oportunidad'), $('#cot-empresa').value, '');
   });
   $('#btn-nuevo-pedido').addEventListener('click', () => openPedidoModal());
+  $('#btn-nueva-actividad').addEventListener('click', () => openActividadModal());
+  $('#btn-nueva-actividad-cal').addEventListener('click', () => openActividadModal());
+  $$('.js-actividad-filter').forEach((btn) => btn.addEventListener('click', () => switchActividadFiltro(btn.getAttribute('data-actividad-filter'))));
+  $('#actividad-relacionado-tipo').addEventListener('change', () => populateRelacionadoSelect($('#actividad-relacionado-tipo').value, ''));
+  $$('.js-cal-view').forEach((btn) => btn.addEventListener('click', () => switchCalendarView(btn.getAttribute('data-cal-view'))));
+  $('#btn-cal-prev').addEventListener('click', () => calendarNav(-1));
+  $('#btn-cal-next').addEventListener('click', () => calendarNav(1));
+  $('#btn-cal-hoy').addEventListener('click', () => calendarToday());
   $('#ped-empresa').addEventListener('change', () => {
     populateContactoSelectEl($('#ped-contacto'), $('#ped-empresa').value, '');
     populateCotizacionSelectEl($('#ped-cotizacion'), $('#ped-empresa').value, '');
@@ -2898,6 +3314,43 @@
       submitBtn.textContent = originalLabel;
     }
   });
+  $('#form-actividad').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#actividad-id').value;
+    const relacionadoId = $('#actividad-relacionado-id').value;
+    if (!relacionadoId) {
+      showError('Selecciona un registro para vincular esta actividad (no hay registros de ese tipo disponibles).');
+      return;
+    }
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const payload = {
+      tipo: $('#actividad-tipo').value,
+      relacionado_tipo: $('#actividad-relacionado-tipo').value,
+      relacionado_id: relacionadoId,
+      titulo: $('#actividad-titulo').value.trim(),
+      descripcion: $('#actividad-descripcion').value.trim() || null,
+      completada: $('#actividad-completada').checked,
+      fecha: datetimeLocalToIso($('#actividad-fecha').value),
+      fecha_vencimiento: datetimeLocalToIso($('#actividad-vencimiento').value),
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      if (id) {
+        await supaFetch('actividades?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      } else {
+        await supaFetch('actividades', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      }
+      closeActividadModal();
+      await loadActividades();
+    } catch (err) {
+      showError('No se pudo guardar la actividad en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
   $('#global-search').addEventListener('input', (ev) => {
     searchQuery = ev.target.value.trim();
     renderEmpresas();
@@ -2919,6 +3372,7 @@
       closeServicioModal();
       closeCotizacionModal();
       closePedidoModal();
+      closeActividadModal();
     }
   });
   // 3) Kanban Drag & Drop
@@ -2932,6 +3386,8 @@
   loadProductosCatalogos(); // fase 2: catálogos de máquinas, consumibles y servicios
   loadCotizaciones(); // fase 2: módulo Cotizaciones real (+ cotizacion_items)
   loadPedidos(); // fase 2: módulo Pedidos real
+  loadTicketsCatalogo(); // catálogo ligero para el selector "Relacionado con" de actividades
+  loadActividades(); // fase 3: módulo Actividades real + vista de Calendario
 })();
 </script>
 </body>
