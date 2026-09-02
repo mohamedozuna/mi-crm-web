@@ -482,6 +482,141 @@
           </div>
         </div>
       </section>
+
+      <!-- Leads (real: tabla leads) -->
+      <section id="view-leads" class="hidden flex-col gap-6">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
+            <h2 class="text-base font-semibold text-foreground">Leads</h2>
+            <p class="text-sm text-muted-foreground">Prospectos en bruto, antes de convertirse en oportunidad — tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">leads</code> en Supabase</p>
+          </div>
+          <button type="button" id="btn-nuevo-lead" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
+            <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            Nuevo lead
+          </button>
+        </div>
+        <div class="card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Lead</th>
+                  <th class="px-4 py-3 font-medium">Empresa</th>
+                  <th class="px-4 py-3 font-medium">Origen</th>
+                  <th class="px-4 py-3 font-medium">Temperatura</th>
+                  <th class="px-4 py-3 font-medium">Estatus</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="leads-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contactos (real: tabla contactos) -->
+      <section id="view-contactos" class="hidden flex-col gap-6">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
+            <h2 class="text-base font-semibold text-foreground">Contactos</h2>
+            <p class="text-sm text-muted-foreground">Personas dentro de cada empresa — tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">contactos</code> en Supabase</p>
+          </div>
+          <button type="button" id="btn-nuevo-contacto" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
+            <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+            Nuevo contacto
+          </button>
+        </div>
+        <div class="card-satin overflow-hidden rounded-xl border border-border shadow-lg shadow-black/20">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-border bg-background/40 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Nombre</th>
+                  <th class="px-4 py-3 font-medium">Empresa</th>
+                  <th class="px-4 py-3 font-medium">Rol</th>
+                  <th class="px-4 py-3 font-medium">Email / Teléfono</th>
+                  <th class="px-4 py-3 font-medium">Decisor</th>
+                  <th class="px-4 py-3 font-medium text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="contactos-tbody" class="divide-y divide-border"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Placeholders "En construcción" -->
+      <section id="view-cotizaciones" class="hidden flex-col gap-6">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
+          <h2 class="text-base font-semibold text-foreground">Cotizaciones</h2>
+        </div>
+        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
+          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
+            <svg class="icon size-7" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
+          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">cotizaciones</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+        </div>
+      </section>
+
+      <section id="view-pedidos" class="hidden flex-col gap-6">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
+          <h2 class="text-base font-semibold text-foreground">Pedidos</h2>
+        </div>
+        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
+          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
+            <svg class="icon size-7" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
+          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">pedidos</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+        </div>
+      </section>
+
+      <section id="view-productos" class="hidden flex-col gap-6">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
+          <h2 class="text-base font-semibold text-foreground">Productos</h2>
+        </div>
+        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
+          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
+            <svg class="icon size-7" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
+          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">productos</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+        </div>
+      </section>
+
+      <section id="view-actividades" class="hidden flex-col gap-6">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
+          <h2 class="text-base font-semibold text-foreground">Actividades</h2>
+        </div>
+        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
+          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
+            <svg class="icon size-7" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
+          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: conectar con la tabla <code class="rounded bg-background/60 px-1.5 py-0.5 font-mono text-xs text-gold">actividades</code> en Supabase. Pídemelo cuando quieras avanzar.</p>
+        </div>
+      </section>
+
+      <section id="view-calendario" class="hidden flex-col gap-6">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Operación</p>
+          <h2 class="text-base font-semibold text-foreground">Calendario</h2>
+        </div>
+        <div class="card-satin flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-16 text-center shadow-lg shadow-black/20">
+          <div class="grid size-14 place-items-center rounded-full bg-gold/10 text-gold">
+            <svg class="icon size-7" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-foreground">Módulo en construcción</h3>
+          <p class="max-w-md text-sm text-muted-foreground">Próxima fase: definir y conectar la tabla de eventos/calendario en Supabase. Pídemelo cuando quieras avanzar.</p>
+        </div>
+      </section>
     </main>
   </div>
 </div>
@@ -561,6 +696,143 @@
   </div>
 </div>
 
+<!-- Modal Lead -->
+<div id="modal-lead" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Registro</p>
+        <h2 id="modal-lead-title" class="text-base font-semibold text-foreground">Nuevo lead</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-lead" class="flex flex-col gap-3">
+      <input type="hidden" id="lead-id" />
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Nombre</span>
+        <input required id="lead-nombre" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Empresa</span>
+          <input id="lead-empresa" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Puesto</span>
+          <input id="lead-puesto" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Teléfono</span>
+          <input id="lead-telefono" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Email</span>
+          <input type="email" id="lead-email" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Origen</span>
+          <select id="lead-origen" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Referido">Referido</option>
+            <option value="Sitio Web">Sitio Web</option>
+            <option value="Feria/Evento">Feria/Evento</option>
+            <option value="Llamada Fría">Llamada Fría</option>
+            <option value="Redes Sociales">Redes Sociales</option>
+            <option value="Otro" selected>Otro</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Temperatura</span>
+          <select id="lead-temperatura" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Frío" selected>Frío</option>
+            <option value="Tibio">Tibio</option>
+            <option value="Caliente">Caliente</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Estatus</span>
+          <select id="lead-estatus" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
+            <option value="Nuevo" selected>Nuevo</option>
+            <option value="Contactado">Contactado</option>
+            <option value="Calificado">Calificado</option>
+            <option value="Descartado">Descartado</option>
+            <option value="Convertido">Convertido</option>
+          </select>
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Notas</span>
+        <textarea id="lead-notas" rows="2" class="rounded-lg border border-border bg-background/40 px-3 py-2 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></textarea>
+      </label>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Contacto -->
+<div id="modal-contacto" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-modal></div>
+  <div class="relative mx-auto mt-10 w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-xl border border-border card-satin p-6 shadow-lg shadow-black/40 modal-fade">
+    <div class="mb-5 flex items-start justify-between">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Registro</p>
+        <h2 id="modal-contacto-title" class="text-base font-semibold text-foreground">Nuevo contacto</h2>
+      </div>
+      <button type="button" data-close-modal class="grid size-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-gold" aria-label="Cerrar">
+        <svg class="icon size-4" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="form-contacto" class="flex flex-col gap-3">
+      <input type="hidden" id="contacto-id" />
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Empresa</span>
+        <select required id="contacto-empresa" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20"></select>
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Nombre</span>
+          <input required id="contacto-nombre" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Apellido</span>
+          <input id="contacto-apellido" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Rol / puesto comercial</span>
+        <input id="contacto-rol" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Email</span>
+          <input type="email" id="contacto-email" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm">
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Teléfono</span>
+          <input id="contacto-telefono" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+        </label>
+      </div>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="contacto-decisor" class="size-4 rounded border-border accent-gold" />
+        <span class="text-muted-foreground">Es decisor de compra</span>
+      </label>
+      <div class="mt-2 flex justify-end gap-2">
+        <button type="button" data-close-modal class="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancelar</button>
+        <button type="submit" class="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-primary-foreground">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Modal Confirmación de borrado -->
 <div id="modal-confirm" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-close-confirm></div>
@@ -570,7 +842,7 @@
         <svg class="icon size-5" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/></svg>
       </div>
       <div class="min-w-0">
-        <h2 class="text-base font-semibold text-foreground">Eliminar oportunidad</h2>
+        <h2 id="confirm-title" class="text-base font-semibold text-foreground">Eliminar oportunidad</h2>
         <p id="confirm-text" class="mt-1 text-sm text-muted-foreground">¿Eliminar este registro? Esta acción no se puede deshacer.</p>
       </div>
     </div>
@@ -674,11 +946,14 @@
   const ESTADOS = { prospecto: 'Lead', negociacion: 'Negociación', cerrado: 'Cerrado' };
   const COLORS = ['bg-gold', 'bg-chart-2', 'bg-chart-3'];
 
-  window.empresas = []; // se llena desde Supabase vía loadEmpresas()
+  window.empresas = []; // se llena desde Supabase vía loadEmpresas() (oportunidades + empresas + contactos)
+  window.leads = []; // se llena desde Supabase vía loadLeads() (tabla leads)
+  window.contactos = []; // se llena desde Supabase vía loadContactos() (tabla contactos, independiente de oportunidades)
+  window.empresasCatalogo = []; // catálogo ligero de empresas para el <select> del modal de contactos
 
   let currentView = 'dashboard';
   let searchQuery = '';
-  let pendingDeleteId = null;
+  let pendingDelete = null; // { table: 'oportunidades' | 'leads' | 'contactos', id }
 
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
@@ -714,6 +989,11 @@
     return window.empresas.filter(matchesSearch);
   }
 
+  // Leads "activos" = todos los que no se descartaron ni ya se convirtieron en oportunidad
+  function leadsActivosCount() {
+    return window.leads.filter((l) => l.estatus !== 'Descartado' && l.estatus !== 'Convertido').length;
+  }
+
   function stats() {
     const rows = window.empresas;
     const abiertas = rows.filter((e) => e.estado !== 'cerrado' && Number(e.pipeline) > 0);
@@ -725,7 +1005,7 @@
     const denom = ganadas.length + perdidas.length;
     const conversion = denom ? Math.round((ganadas.length / denom) * 100) : 0;
     return {
-      leads: rows.filter((e) => e.estado === 'prospecto').length,
+      leads: leadsActivosCount(), // viene de la tabla real "leads", no de oportunidades en etapa "prospecto"
       empresas: rows.length,
       abiertas: abiertas.length,
       cotizaciones: rows.filter((e) => e.cotizacionViva).length,
@@ -861,7 +1141,7 @@
         '</div></td></tr>'
     )).join('');
     tb.querySelectorAll('[data-edit]').forEach((btn) => btn.addEventListener('click', () => openModal(btn.getAttribute('data-edit'))));
-    tb.querySelectorAll('[data-del]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete(btn.getAttribute('data-del'))));
+    tb.querySelectorAll('[data-del]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('oportunidades', btn.getAttribute('data-del'))));
   }
 
   function renderKanban() {
@@ -930,16 +1210,160 @@
     });
   }
 
+  // ============================================================
+  // Módulo LEADS (tabla real "leads", independiente de oportunidades)
+  // ============================================================
+  function temperaturaBadge(t) {
+    const map = { 'Frío': 'text-chart-2 bg-chart-2/15', 'Tibio': 'text-gold bg-gold/15', 'Caliente': 'text-destructive bg-destructive/15' };
+    return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[t] || '') + '">' + t + '</span>';
+  }
+  function estatusLeadBadge(s) {
+    const map = { Nuevo: 'text-gold bg-gold/15', Contactado: 'text-chart-2 bg-chart-2/15', Calificado: 'text-chart-3 bg-chart-3/15', Descartado: 'text-muted-foreground bg-border/40', Convertido: 'text-chart-3 bg-chart-3/15' };
+    return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[s] || '') + '">' + s + '</span>';
+  }
+
+  function renderLeads() {
+    const tb = $('#leads-tbody');
+    if (!tb) return;
+    const rows = window.leads;
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin leads</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((l) => (
+      '<tr class="hover:bg-background/30">' +
+        '<td class="px-4 py-3"><p class="font-medium text-foreground">' + l.nombre + '</p><p class="text-xs text-muted-foreground">' + (l.email || l.telefono || '—') + '</p></td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (l.empresa_nombre || '—') + '</td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (l.origen || '—') + '</td>' +
+        '<td class="px-4 py-3">' + temperaturaBadge(l.temperatura || 'Frío') + '</td>' +
+        '<td class="px-4 py-3">' + estatusLeadBadge(l.estatus || 'Nuevo') + '</td>' +
+        '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+          '<button type="button" data-edit-lead="' + l.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+          '<button type="button" data-del-lead="' + l.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+        '</div></td></tr>'
+    )).join('');
+    tb.querySelectorAll('[data-edit-lead]').forEach((btn) => btn.addEventListener('click', () => openLeadModal(btn.getAttribute('data-edit-lead'))));
+    tb.querySelectorAll('[data-del-lead]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('leads', btn.getAttribute('data-del-lead'))));
+  }
+
+  async function loadLeads() {
+    try {
+      const rows = await supaFetch('leads?select=*&order=fecha_alta.desc', { method: 'GET' });
+      window.leads = rows;
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.leads = [];
+      showError('No se pudieron cargar los leads de Supabase: ' + err.message);
+    }
+    renderLeads();
+    setStats();
+  }
+
+  function openLeadModal(id) {
+    const modal = $('#modal-lead');
+    const lead = id ? window.leads.find((l) => l.id === id) : null;
+    $('#modal-lead-title').textContent = lead ? 'Editar lead' : 'Nuevo lead';
+    $('#lead-id').value = lead ? lead.id : '';
+    $('#lead-nombre').value = lead ? lead.nombre : '';
+    $('#lead-empresa').value = lead ? (lead.empresa_nombre || '') : '';
+    $('#lead-puesto').value = lead ? (lead.puesto || '') : '';
+    $('#lead-telefono').value = lead ? (lead.telefono || '') : '';
+    $('#lead-email').value = lead ? (lead.email || '') : '';
+    $('#lead-origen').value = lead ? (lead.origen || 'Otro') : 'Otro';
+    $('#lead-temperatura').value = lead ? (lead.temperatura || 'Frío') : 'Frío';
+    $('#lead-estatus').value = lead ? (lead.estatus || 'Nuevo') : 'Nuevo';
+    $('#lead-notas').value = lead ? (lead.notas || '') : '';
+    modal.classList.remove('hidden');
+    $('#lead-nombre').focus();
+  }
+  function closeLeadModal() {
+    $('#modal-lead').classList.add('hidden');
+  }
+
+  // ============================================================
+  // Módulo CONTACTOS (tabla real "contactos", independiente de oportunidades)
+  // ============================================================
+  function renderContactos() {
+    const tb = $('#contactos-tbody');
+    if (!tb) return;
+    const rows = window.contactos;
+    if (!rows.length) {
+      tb.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-sm text-muted-foreground">Sin contactos</td></tr>';
+      return;
+    }
+    tb.innerHTML = rows.map((c) => (
+      '<tr class="hover:bg-background/30">' +
+        '<td class="px-4 py-3"><p class="font-medium text-foreground">' + [c.nombre, c.apellido].filter(Boolean).join(' ') + '</p></td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + ((c.empresas && c.empresas.nombre) || '—') + '</td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (c.rol_comercial || '—') + '</td>' +
+        '<td class="px-4 py-3 text-muted-foreground">' + (c.email || c.telefono || '—') + '</td>' +
+        '<td class="px-4 py-3">' + (c.es_decisor ? '<span class="rounded-full bg-gold/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-gold">Sí</span>' : '<span class="text-xs text-muted-foreground">No</span>') + '</td>' +
+        '<td class="px-4 py-3"><div class="flex justify-end gap-2">' +
+          '<button type="button" data-edit-contacto="' + c.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-gold/40 hover:text-gold">Editar</button>' +
+          '<button type="button" data-del-contacto="' + c.id + '" class="rounded-lg border border-border px-2.5 py-1.5 text-xs text-muted-foreground hover:border-destructive/50 hover:text-destructive">Borrar</button>' +
+        '</div></td></tr>'
+    )).join('');
+    tb.querySelectorAll('[data-edit-contacto]').forEach((btn) => btn.addEventListener('click', () => openContactoModal(btn.getAttribute('data-edit-contacto'))));
+    tb.querySelectorAll('[data-del-contacto]').forEach((btn) => btn.addEventListener('click', () => openConfirmDelete('contactos', btn.getAttribute('data-del-contacto'))));
+  }
+
+  async function loadContactos() {
+    try {
+      const rows = await supaFetch('contactos?select=*,empresas(id,nombre)&order=nombre.asc', { method: 'GET' });
+      window.contactos = rows;
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.contactos = [];
+      showError('No se pudieron cargar los contactos de Supabase: ' + err.message);
+    }
+    renderContactos();
+  }
+
+  // Catálogo ligero de empresas, solo para poblar el <select> del modal de contactos
+  async function loadEmpresasCatalogo() {
+    try {
+      const rows = await supaFetch('empresas?select=id,nombre&order=nombre.asc', { method: 'GET' });
+      window.empresasCatalogo = rows;
+      const sel = $('#contacto-empresa');
+      if (sel) sel.innerHTML = rows.map((e) => '<option value="' + e.id + '">' + e.nombre + '</option>').join('');
+    } catch (err) {
+      console.error(err);
+      window.empresasCatalogo = [];
+    }
+  }
+
+  function openContactoModal(id) {
+    const modal = $('#modal-contacto');
+    const c = id ? window.contactos.find((x) => x.id === id) : null;
+    $('#modal-contacto-title').textContent = c ? 'Editar contacto' : 'Nuevo contacto';
+    $('#contacto-id').value = c ? c.id : '';
+    const sel = $('#contacto-empresa');
+    if (c) {
+      sel.value = c.empresa_id;
+    } else if (sel.options.length) {
+      sel.selectedIndex = 0;
+    }
+    $('#contacto-nombre').value = c ? c.nombre : '';
+    $('#contacto-apellido').value = c ? (c.apellido || '') : '';
+    $('#contacto-rol').value = c ? (c.rol_comercial || '') : '';
+    $('#contacto-email').value = c ? (c.email || '') : '';
+    $('#contacto-telefono').value = c ? (c.telefono || '') : '';
+    $('#contacto-decisor').checked = c ? !!c.es_decisor : false;
+    modal.classList.remove('hidden');
+    $('#contacto-nombre').focus();
+  }
+  function closeContactoModal() {
+    $('#modal-contacto').classList.add('hidden');
+  }
+
+  // Nota: leads, contactos, cotizaciones, pedidos, productos, actividades y calendario
+  // ya NO usan este listado genérico — leads/contactos tienen su propia vista+tabla real,
+  // y los demás quedan en "En construcción" (#view-cotizaciones, #view-pedidos, etc.)
   const LISTAS = {
-    leads: { kicker: 'Comercial', title: 'Leads', sub: 'Oportunidades en etapa Lead', cols: ['Empresa', 'Contacto', 'Zona', 'Pipeline'], filter: (e) => e.estado === 'prospecto', row: (e) => [e.nombre, e.contacto, e.zona, moneyK(e.pipeline)] },
-    contactos: { kicker: 'Comercial', title: 'Contactos', sub: 'Personas ligadas a cada empresa', cols: ['Nombre', 'Empresa', 'Email', 'Zona'], filter: () => true, row: (e) => [e.contacto, e.nombre, e.email, e.zona] },
-    cotizaciones: { kicker: 'Comercial', title: 'Cotizaciones', sub: 'Cotizaciones vivas (pendiente conectar tabla cotizaciones)', cols: ['Empresa', 'Contacto', 'Vence', 'Pipeline'], filter: (e) => e.cotizacionViva, row: (e) => [e.nombre, e.contacto, e.cotizacionVence || '—', moneyK(e.pipeline)] },
-    pedidos: { kicker: 'Comercial', title: 'Pedidos', sub: 'Pedidos en proceso (pendiente conectar tabla pedidos)', cols: ['Empresa', 'Contacto', 'Zona', 'Pipeline'], filter: (e) => e.pedidoEnProceso, row: (e) => [e.nombre, e.contacto, e.zona, moneyK(e.pipeline)] },
-    productos: { kicker: 'Operación', title: 'Productos', sub: 'Mix de ventas por empresa (pendiente conectar cotizacion_items/pedidos)', cols: ['Empresa', 'Maquinaria', 'Consumibles', 'Servicios'], filter: () => true, row: (e) => [e.nombre, moneyK(e.ventasMaquinaria), moneyK(e.ventasConsumibles), moneyK(e.ventasServicios)] },
     maquinas: { kicker: 'Operación', title: 'Máquinas instaladas', sub: 'Parque instalado por cliente (pendiente conectar tabla maquinas_instaladas)', cols: ['Empresa', 'Zona', 'Máquinas', 'Recompra'], filter: (e) => Number(e.maquinasInstaladas) > 0, row: (e) => [e.nombre, e.zona, String(e.maquinasInstaladas), e.recompra ? 'Sí' : 'No'] },
     tickets: { kicker: 'Operación', title: 'Servicios / Tickets', sub: 'Tickets abiertos (pendiente conectar tabla tickets)', cols: ['Empresa', 'Contacto', 'Tickets', 'Estado'], filter: (e) => Number(e.ticketsAbiertos) > 0, row: (e) => [e.nombre, e.contacto, String(e.ticketsAbiertos), ESTADOS[e.estado]] },
-    actividades: { kicker: 'Operación', title: 'Actividades', sub: 'Seguimiento comercial (pendiente conectar tabla actividades)', cols: ['Empresa', 'Días sin actividad', 'Visita', 'Alerta'], filter: () => true, row: (e) => [e.nombre, String(e.diasSinActividad), e.visitaSemana ? 'Esta semana' : '—', e.diasSinActividad >= 5 ? 'Inactividad' : (e.cotizacionViva ? 'Cotización' : 'OK')] },
-    calendario: { kicker: 'Operación', title: 'Calendario', sub: 'Visitas de la semana', cols: ['Empresa', 'Contacto', 'Zona', 'Visita'], filter: (e) => e.visitaSemana, row: (e) => [e.nombre, e.contacto, e.zona, 'Agendada'] },
     recompras: { kicker: 'Operación', title: 'Recompras vigiladas', sub: 'Clientes con señal de recompra', cols: ['Empresa', 'Máquinas', 'Consumibles', 'Zona'], filter: (e) => e.recompra, row: (e) => [e.nombre, String(e.maquinasInstaladas), moneyK(e.ventasConsumibles), e.zona] },
     marketing: { kicker: 'Inteligencia', title: 'Marketing', sub: 'Cuentas por zona', cols: ['Empresa', 'Zona', 'Estado', 'Representante'], filter: () => true, row: (e) => [e.nombre, e.zona, ESTADOS[e.estado], e.representante || '—'] },
     reportes: { kicker: 'Inteligencia', title: 'Reportes', sub: 'Resumen comercial por cuenta', cols: ['Empresa', 'Pipeline', 'Ventas', 'Estado'], filter: () => true, row: (e) => [e.nombre, moneyK(e.pipeline), moneyK(Number(e.ventasMaquinaria) + Number(e.ventasConsumibles) + Number(e.ventasServicios)), ESTADOS[e.estado]] },
@@ -992,30 +1416,40 @@
     });
   }
 
+  // Vistas con contenedor propio (dedicado). Todo lo que NO esté aquí cae
+  // en el sistema genérico #view-lista + LISTAS (maquinas, tickets, marketing, etc.)
+  const VIEW_IDS = {
+    dashboard: 'view-dashboard',
+    empresas: 'view-empresas',
+    kanban: 'view-kanban',
+    leads: 'view-leads',
+    contactos: 'view-contactos',
+    cotizaciones: 'view-cotizaciones',
+    pedidos: 'view-pedidos',
+    productos: 'view-productos',
+    actividades: 'view-actividades',
+    calendario: 'view-calendario',
+  };
+
   function showView(view) {
     currentView = view;
-    const dash = $('#view-dashboard');
-    const emp = $('#view-empresas');
-    const kan = $('#view-kanban');
+    Object.values(VIEW_IDS).forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    });
     const lis = $('#view-lista');
-    dash.classList.add('hidden');
-    dash.classList.remove('flex');
-    emp.classList.add('hidden');
-    emp.classList.remove('flex');
-    kan.classList.add('hidden');
-    kan.classList.remove('flex');
     lis.classList.add('hidden');
     lis.classList.remove('flex');
 
-    if (view === 'dashboard') {
-      dash.classList.remove('hidden');
-      dash.classList.add('flex');
-    } else if (view === 'empresas') {
-      emp.classList.remove('hidden');
-      emp.classList.add('flex');
-    } else if (view === 'kanban') {
-      kan.classList.remove('hidden');
-      kan.classList.add('flex');
+    const directId = VIEW_IDS[view];
+    if (directId) {
+      const el = document.getElementById(directId);
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+      if (view === 'leads') renderLeads();
+      if (view === 'contactos') renderContactos();
     } else {
       lis.classList.remove('hidden');
       lis.classList.add('flex');
@@ -1048,35 +1482,60 @@
     $('#modal-empresa').classList.add('hidden');
   }
 
-  // Confirmación de borrado (modal propio, sin diálogos nativos del navegador)
-  function openConfirmDelete(id) {
-    const emp = window.empresas.find((e) => e.id === id);
-    if (!emp) return;
-    pendingDeleteId = id;
-    $('#confirm-text').textContent = '¿Eliminar la oportunidad de "' + emp.nombre + '"? La empresa y el contacto se conservan; esta acción no se puede deshacer.';
+  // Confirmación de borrado GENERALIZADA (modal propio, sin diálogos nativos del navegador)
+  // pendingDelete = { table: 'oportunidades' | 'leads' | 'contactos', id }
+  const DELETE_CONFIG = {
+    oportunidades: {
+      title: 'Eliminar oportunidad',
+      text: (label) => '¿Eliminar la oportunidad de "' + label + '"? La empresa y el contacto se conservan; esta acción no se puede deshacer.',
+      label: (id) => { const e = window.empresas.find((x) => x.id === id); return e ? e.nombre : 'este registro'; },
+      reload: () => loadEmpresas(),
+    },
+    leads: {
+      title: 'Eliminar lead',
+      text: (label) => '¿Eliminar el lead "' + label + '"? Esta acción no se puede deshacer.',
+      label: (id) => { const l = window.leads.find((x) => x.id === id); return l ? l.nombre : 'este lead'; },
+      reload: () => loadLeads(),
+    },
+    contactos: {
+      title: 'Eliminar contacto',
+      text: (label) => '¿Eliminar al contacto "' + label + '"? Esta acción no se puede deshacer.',
+      label: (id) => { const c = window.contactos.find((x) => x.id === id); return c ? [c.nombre, c.apellido].filter(Boolean).join(' ') : 'este contacto'; },
+      reload: () => loadContactos(),
+    },
+  };
+
+  function openConfirmDelete(table, id) {
+    const cfg = DELETE_CONFIG[table];
+    if (!cfg) return;
+    pendingDelete = { table, id };
+    $('#confirm-title').textContent = cfg.title;
+    $('#confirm-text').textContent = cfg.text(cfg.label(id));
     $('#modal-confirm').classList.remove('hidden');
   }
 
   function closeConfirmModal() {
-    pendingDeleteId = null;
+    pendingDelete = null;
     $('#modal-confirm').classList.add('hidden');
   }
 
   async function confirmDelete() {
-    if (!pendingDeleteId) return;
+    if (!pendingDelete) return;
+    const { table, id } = pendingDelete;
+    const cfg = DELETE_CONFIG[table];
     const btn = $('#btn-confirm-delete');
     const original = btn.textContent;
     btn.disabled = true;
     btn.textContent = 'Eliminando…';
     try {
-      // Solo se borra la OPORTUNIDAD; la empresa y el contacto se conservan
-      // (una empresa puede tener más de una oportunidad en el futuro).
-      await supaFetch('oportunidades?id=eq.' + pendingDeleteId, {
+      // Para "oportunidades" solo se borra la oportunidad; la empresa y el
+      // contacto se conservan (una empresa puede tener más de una oportunidad).
+      await supaFetch(table + '?id=eq.' + id, {
         method: 'DELETE',
         headers: { Prefer: 'return=minimal' },
       });
       closeConfirmModal();
-      await loadEmpresas();
+      await cfg.reload();
     } catch (err) {
       showError('No se pudo eliminar en Supabase: ' + err.message);
     } finally {
@@ -1133,12 +1592,25 @@
       ev.preventDefault();
       showView(nav.getAttribute('data-nav'));
     }
-    if (ev.target.closest('[data-close-modal]')) closeModal();
+    // Cierra el modal (backdrop o botón X) al que pertenece el elemento clicado,
+    // sin importar si es modal-empresa, modal-lead o modal-contacto
+    const closeTrigger = ev.target.closest('[data-close-modal]');
+    if (closeTrigger) {
+      const modal = closeTrigger.closest('.fixed.inset-0.z-50');
+      if (modal) modal.classList.add('hidden');
+    }
     if (ev.target.closest('[data-close-confirm]')) closeConfirmModal();
   });
 
-  $('#btn-nuevo').addEventListener('click', () => openModal());
+  // "+ Nuevo" del topbar es sensible al módulo activo
+  $('#btn-nuevo').addEventListener('click', () => {
+    if (currentView === 'leads') openLeadModal();
+    else if (currentView === 'contactos') openContactoModal();
+    else openModal();
+  });
   $('#btn-nueva-empresa').addEventListener('click', () => openModal());
+  $('#btn-nuevo-lead').addEventListener('click', () => openLeadModal());
+  $('#btn-nuevo-contacto').addEventListener('click', () => openContactoModal());
   $('#btn-confirm-delete').addEventListener('click', confirmDelete);
 
   $('#form-empresa').addEventListener('submit', async (ev) => {
@@ -1237,6 +1709,72 @@
     }
   });
 
+  $('#form-lead').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#lead-id').value;
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const payload = {
+      nombre: $('#lead-nombre').value.trim(),
+      empresa_nombre: $('#lead-empresa').value.trim() || null,
+      puesto: $('#lead-puesto').value.trim() || null,
+      telefono: $('#lead-telefono').value.trim() || null,
+      email: $('#lead-email').value.trim() || null,
+      origen: $('#lead-origen').value,
+      temperatura: $('#lead-temperatura').value,
+      estatus: $('#lead-estatus').value,
+      notas: $('#lead-notas').value.trim() || null,
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      if (id) {
+        await supaFetch('leads?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      } else {
+        await supaFetch('leads', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      }
+      closeLeadModal();
+      await loadLeads();
+    } catch (err) {
+      showError('No se pudo guardar el lead en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+
+  $('#form-contacto').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const id = $('#contacto-id').value;
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const payload = {
+      empresa_id: $('#contacto-empresa').value,
+      nombre: $('#contacto-nombre').value.trim(),
+      apellido: $('#contacto-apellido').value.trim() || null,
+      rol_comercial: $('#contacto-rol').value.trim() || null,
+      email: $('#contacto-email').value.trim() || null,
+      telefono: $('#contacto-telefono').value.trim() || null,
+      es_decisor: $('#contacto-decisor').checked,
+    };
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+    try {
+      if (id) {
+        await supaFetch('contactos?id=eq.' + id, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      } else {
+        await supaFetch('contactos', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+      }
+      closeContactoModal();
+      await loadContactos();
+    } catch (err) {
+      showError('No se pudo guardar el contacto en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+
   $('#global-search').addEventListener('input', (ev) => {
     searchQuery = ev.target.value.trim();
     renderEmpresas();
@@ -1251,6 +1789,8 @@
     }
     if (ev.key === 'Escape') {
       closeModal();
+      closeLeadModal();
+      closeContactoModal();
       closeConfirmModal();
     }
   });
@@ -1259,7 +1799,10 @@
   bindKanbanDnd();
 
   showView('dashboard');
-  loadEmpresas(); // 1) sin mock data — todo se lee de Supabase (empresas + oportunidades)
+  loadEmpresas(); // empresas + oportunidades (módulo ya existente)
+  loadLeads(); // fase 1: módulo Leads real
+  loadContactos(); // fase 1: módulo Contactos real
+  loadEmpresasCatalogo(); // catálogo para el <select> de empresa del modal de contactos
 })();
 </script>
 </body>
