@@ -52,6 +52,8 @@
     .kanban-col.drag-over { box-shadow: inset 0 0 0 1px oklch(0.8 0.11 85 / 55%); }
     .modal-fade { animation: modal-in .15s ease-out; }
     @keyframes modal-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .spin { animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body class="bg-background text-foreground antialiased">
@@ -242,7 +244,7 @@
               Todas las zonas
               <svg class="icon size-4 text-muted-foreground" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
             </button>
-            <span class="ml-auto rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-gold">Datos limpios</span>
+            <span id="datos-badge" class="ml-auto rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-gold">Conectando a Supabase…</span>
           </div>
 
           <div class="card-satin rounded-xl border border-border p-5 shadow-lg shadow-black/20">
@@ -404,7 +406,7 @@
           <div>
             <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Comercial</p>
             <h2 class="text-base font-semibold text-foreground">Empresas</h2>
-            <p class="text-sm text-muted-foreground">Clientes y prospectos alimentados desde el cerebro de datos</p>
+            <p class="text-sm text-muted-foreground">Oportunidades comerciales, vinculadas a su empresa y contacto en Supabase</p>
           </div>
           <button type="button" id="btn-nueva-empresa" class="flex items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.03] active:scale-95">
             <svg class="icon size-4" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
@@ -438,12 +440,12 @@
           <p class="text-sm text-muted-foreground">Arrastra las tarjetas entre columnas para actualizar el estado</p>
         </div>
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div data-estado="lead" class="kanban-col card-satin flex min-h-[320px] flex-col rounded-xl border border-border p-4 shadow-lg shadow-black/20">
+          <div data-estado="prospecto" class="kanban-col card-satin flex min-h-[320px] flex-col rounded-xl border border-border p-4 shadow-lg shadow-black/20">
             <div class="mb-4 flex items-center justify-between">
               <h3 class="text-sm font-semibold text-foreground">Leads</h3>
-              <span data-col-count="lead" class="grid h-5 min-w-5 place-items-center rounded-full bg-gold/15 px-1.5 font-mono text-[11px] font-semibold text-gold">0</span>
+              <span data-col-count="prospecto" class="grid h-5 min-w-5 place-items-center rounded-full bg-gold/15 px-1.5 font-mono text-[11px] font-semibold text-gold">0</span>
             </div>
-            <div data-cards="lead" class="flex flex-1 flex-col gap-3"></div>
+            <div data-cards="prospecto" class="flex flex-1 flex-col gap-3"></div>
           </div>
           <div data-estado="negociacion" class="kanban-col card-satin flex min-h-[320px] flex-col rounded-xl border border-border p-4 shadow-lg shadow-black/20">
             <div class="mb-4 flex items-center justify-between">
@@ -527,7 +529,7 @@
         <label class="flex flex-col gap-1 text-sm">
           <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Estado</span>
           <select id="emp-estado" class="h-10 rounded-lg border border-border bg-background/40 px-3 text-sm outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20">
-            <option value="lead">Lead</option>
+            <option value="prospecto">Lead</option>
             <option value="negociacion">Negociación</option>
             <option value="cerrado">Cerrado</option>
           </select>
@@ -568,8 +570,8 @@
         <svg class="icon size-5" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/></svg>
       </div>
       <div class="min-w-0">
-        <h2 class="text-base font-semibold text-foreground">Eliminar empresa</h2>
-        <p id="confirm-text" class="mt-1 text-sm text-muted-foreground">¿Eliminar esta empresa? Esta acción no se puede deshacer.</p>
+        <h2 class="text-base font-semibold text-foreground">Eliminar oportunidad</h2>
+        <p id="confirm-text" class="mt-1 text-sm text-muted-foreground">¿Eliminar este registro? Esta acción no se puede deshacer.</p>
       </div>
     </div>
     <div class="flex justify-end gap-2">
@@ -579,72 +581,84 @@
   </div>
 </div>
 
+<!-- Toast de error de red / Supabase -->
+<div id="error-toast" class="fixed bottom-4 right-4 z-[60] hidden max-w-sm rounded-lg border border-destructive/40 bg-card/95 px-4 py-3 text-sm shadow-lg shadow-black/40 modal-fade">
+  <p class="font-semibold text-destructive">Error de conexión</p>
+  <p id="error-toast-text" class="mt-1 text-xs text-muted-foreground"></p>
+</div>
+
 <script>
 (function () {
-  const ESTADOS = { lead: 'Lead', negociacion: 'Negociación', cerrado: 'Cerrado' };
-  const COLORS = ['bg-gold', 'bg-chart-2', 'bg-chart-3'];
+  // ============================================================
+  // Conexión a Supabase (REST / PostgREST vía fetch nativo)
+  // Proyecto: "CRM _1.2" (kvjqekfbrvkatkthdjwo)
+  // Tablas reales usadas: empresas, contactos, oportunidades
+  // ------------------------------------------------------------
+  // NOTA DE SEGURIDAD: Row Level Security está DESACTIVADO en este
+  // proyecto (decisión explícita de Moha mientras no hay login).
+  // Esto significa que cualquiera con esta publishable key puede
+  // leer y escribir CUALQUIER fila de CUALQUIER tabla del proyecto,
+  // no solo empresas/contactos/oportunidades. Es aceptable para
+  // pruebas, pero antes de producción hay que activar RLS + políticas.
+  // ============================================================
+  const SUPABASE_URL = 'https://kvjqekfbrvkatkthdjwo.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_8zSsLUp1SnQn7656usWieg_GUPHPe5D';
 
-  // 1) Datos de prueba: 3 clientes, uno por cada etapa del pipeline (lead / negociación / cerrado)
-  window.empresas = [
-    {
-      id: 'emp-1',
-      nombre: 'Grupo Envases MX',
-      contacto: 'María Elena Soto',
-      email: 'msoto@grupoenvases.mx',
-      zona: 'Centro',
-      representante: 'Carlos Méndez',
-      estado: 'negociacion',
-      pipeline: 80000,
-      probabilidad: 50,
-      ventasMaquinaria: 22000,
-      ventasConsumibles: 9000,
+  function supaHeaders(extra) {
+    return Object.assign(
+      {
+        apikey: SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+      },
+      extra || {}
+    );
+  }
+
+  async function supaFetch(path, options) {
+    options = options || {};
+    const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, Object.assign({}, options, {
+      headers: supaHeaders(options.headers),
+    }));
+    if (!res.ok) {
+      let detail = '';
+      try { detail = (await res.json()).message || ''; } catch (e) { /* respuesta sin JSON */ }
+      throw new Error('HTTP ' + res.status + (detail ? ' — ' + detail : ''));
+    }
+    if (res.status === 204) return null;
+    const ct = res.headers.get('content-type') || '';
+    return ct.includes('application/json') ? res.json() : null;
+  }
+
+  // ---- Mapeo oportunidad (+ empresa + contacto embebidos) -> objeto plano del frontend ----
+  function defaultProbabilidad(etapa) {
+    if (etapa === 'cerrado') return 100;
+    if (etapa === 'negociacion') return 50;
+    return 20; // prospecto
+  }
+
+  function mapOportunidadToEmpresa(op) {
+    const emp = op.empresas || {};
+    const con = op.contactos || {};
+    const rep = op.perfiles || {};
+    return {
+      id: op.id, // id de la OPORTUNIDAD (fila real del CRUD/Kanban)
+      empresaId: op.empresa_id,
+      contactoId: op.contacto_id || null,
+      nombre: emp.nombre || '(Empresa sin nombre)',
+      contacto: [con.nombre, con.apellido].filter(Boolean).join(' ') || '—',
+      email: con.email || '',
+      zona: emp.zona || '',
+      representante: rep.nombre || '',
+      estado: op.etapa || 'prospecto',
+      pipeline: Number(op.valor_estimado) || 0,
+      probabilidad: Number(op.probabilidad) || 0,
+      // Los siguientes campos visuales no tienen tabla dentro del alcance actual
+      // (solo empresas + oportunidades). Quedan en su valor neutro hasta conectar
+      // cotizaciones, pedidos, maquinas_instaladas y tickets en una siguiente etapa.
+      ventasMaquinaria: 0,
+      ventasConsumibles: 0,
       ventasServicios: 0,
-      cotizacionViva: true,
-      cotizacionVence: 'vence en 2 días',
-      pedidoEnProceso: true,
-      maquinasInstaladas: 1,
-      recompra: true,
-      ticketsAbiertos: 1,
-      diasSinActividad: 0,
-      visitaSemana: true,
-      perdido: false,
-    },
-    {
-      id: 'emp-2',
-      nombre: 'TecnoPlast S.A.',
-      contacto: 'Jorge Villarreal',
-      email: 'jvillarreal@tecnoplast.mx',
-      zona: 'Norte',
-      representante: 'Ana López',
-      estado: 'lead',
-      pipeline: 70000,
-      probabilidad: 50,
-      ventasMaquinaria: 13000,
-      ventasConsumibles: 6000,
-      ventasServicios: 0,
-      cotizacionViva: false,
-      cotizacionVence: '',
-      pedidoEnProceso: false,
-      maquinasInstaladas: 1,
-      recompra: false,
-      ticketsAbiertos: 0,
-      diasSinActividad: 5,
-      visitaSemana: false,
-      perdido: false,
-    },
-    {
-      id: 'emp-3',
-      nombre: 'Industrias Delta Print',
-      contacto: 'Laura Chen',
-      email: 'lchen@deltaprint.mx',
-      zona: 'Occidente',
-      representante: 'Carlos Méndez',
-      estado: 'cerrado',
-      pipeline: 0,
-      probabilidad: 100,
-      ventasMaquinaria: 35000,
-      ventasConsumibles: 10000,
-      ventasServicios: 5000,
       cotizacionViva: false,
       cotizacionVence: '',
       pedidoEnProceso: false,
@@ -653,13 +667,17 @@
       ticketsAbiertos: 0,
       diasSinActividad: 0,
       visitaSemana: false,
-      perdido: false,
-    },
-  ];
+      perdido: op.etapa === 'perdida',
+    };
+  }
+
+  const ESTADOS = { prospecto: 'Lead', negociacion: 'Negociación', cerrado: 'Cerrado' };
+  const COLORS = ['bg-gold', 'bg-chart-2', 'bg-chart-3'];
+
+  window.empresas = []; // se llena desde Supabase vía loadEmpresas()
 
   let currentView = 'dashboard';
   let searchQuery = '';
-  let uid = 4; // siguiente id disponible tras emp-3
   let pendingDeleteId = null;
 
   const $ = (sel, root) => (root || document).querySelector(sel);
@@ -669,6 +687,18 @@
     n = Number(n) || 0;
     if (Math.abs(n) >= 1000) return '$' + Math.round(n / 1000) + 'K';
     return '$' + n;
+  }
+
+  let errorTimer = null;
+  function showError(msg) {
+    const toast = $('#error-toast');
+    $('#error-toast-text').textContent = msg;
+    toast.classList.remove('hidden');
+    clearTimeout(errorTimer);
+    errorTimer = setTimeout(hideError, 7000);
+  }
+  function hideError() {
+    $('#error-toast').classList.add('hidden');
   }
 
   function matchesSearch(e) {
@@ -695,7 +725,7 @@
     const denom = ganadas.length + perdidas.length;
     const conversion = denom ? Math.round((ganadas.length / denom) * 100) : 0;
     return {
-      leads: rows.filter((e) => e.estado === 'lead').length,
+      leads: rows.filter((e) => e.estado === 'prospecto').length,
       empresas: rows.length,
       abiertas: abiertas.length,
       cotizaciones: rows.filter((e) => e.cotizacionViva).length,
@@ -762,13 +792,13 @@
     const ul = $('#pipeline-etapas');
     if (!ul) return;
     const counts = {
-      lead: window.empresas.filter((e) => e.estado === 'lead').length,
+      prospecto: window.empresas.filter((e) => e.estado === 'prospecto').length,
       negociacion: window.empresas.filter((e) => e.estado === 'negociacion').length,
       cerrado: window.empresas.filter((e) => e.estado === 'cerrado').length,
     };
-    const max = Math.max(1, counts.lead, counts.negociacion, counts.cerrado);
+    const max = Math.max(1, counts.prospecto, counts.negociacion, counts.cerrado);
     const rows = [
-      ['Lead', counts.lead],
+      ['Lead', counts.prospecto],
       ['Negociación', counts.negociacion],
       ['Cerrado', counts.cerrado],
     ];
@@ -806,7 +836,7 @@
   }
 
   function estadoBadge(estado) {
-    const map = { lead: 'text-gold bg-gold/15', negociacion: 'text-chart-2 bg-chart-2/15', cerrado: 'text-chart-3 bg-chart-3/15' };
+    const map = { prospecto: 'text-gold bg-gold/15', negociacion: 'text-chart-2 bg-chart-2/15', cerrado: 'text-chart-3 bg-chart-3/15' };
     return '<span class="rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ' + (map[estado] || '') + '">' + (ESTADOS[estado] || estado) + '</span>';
   }
 
@@ -835,7 +865,7 @@
   }
 
   function renderKanban() {
-    ['lead', 'negociacion', 'cerrado'].forEach((estado) => {
+    ['prospecto', 'negociacion', 'cerrado'].forEach((estado) => {
       const col = $('[data-cards="' + estado + '"]');
       const count = $('[data-col-count="' + estado + '"]');
       const items = filtered().filter((e) => e.estado === estado);
@@ -867,34 +897,54 @@
         col.classList.add('drag-over');
       });
       col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
-      col.addEventListener('drop', (ev) => {
+      col.addEventListener('drop', async (ev) => {
         ev.preventDefault();
         col.classList.remove('drag-over');
         const id = ev.dataTransfer.getData('text/plain');
         const emp = window.empresas.find((e) => e.id === id);
         if (!emp) return;
-        emp.estado = col.getAttribute('data-estado');
-        if (emp.estado === 'cerrado') emp.perdido = false;
+        const nuevaEtapa = col.getAttribute('data-estado');
+        if (emp.estado === nuevaEtapa) return;
+
+        // Actualización optimista en UI, con reversión si falla la escritura en Supabase
+        const anteriorEtapa = emp.estado;
+        const anteriorProb = emp.probabilidad;
+        emp.estado = nuevaEtapa;
+        emp.probabilidad = defaultProbabilidad(nuevaEtapa);
+        if (nuevaEtapa === 'cerrado') emp.perdido = false;
         renderAll();
+
+        try {
+          await supaFetch('oportunidades?id=eq.' + id, {
+            method: 'PATCH',
+            headers: { Prefer: 'return=minimal' },
+            body: JSON.stringify({ etapa: nuevaEtapa, probabilidad: emp.probabilidad }),
+          });
+        } catch (err) {
+          emp.estado = anteriorEtapa;
+          emp.probabilidad = anteriorProb;
+          renderAll();
+          showError('No se pudo mover la tarjeta en Supabase: ' + err.message);
+        }
       });
     });
   }
 
   const LISTAS = {
-    leads: { kicker: 'Comercial', title: 'Leads', sub: 'Empresas en etapa Lead', cols: ['Empresa', 'Contacto', 'Zona', 'Pipeline'], filter: (e) => e.estado === 'lead', row: (e) => [e.nombre, e.contacto, e.zona, moneyK(e.pipeline)] },
+    leads: { kicker: 'Comercial', title: 'Leads', sub: 'Oportunidades en etapa Lead', cols: ['Empresa', 'Contacto', 'Zona', 'Pipeline'], filter: (e) => e.estado === 'prospecto', row: (e) => [e.nombre, e.contacto, e.zona, moneyK(e.pipeline)] },
     contactos: { kicker: 'Comercial', title: 'Contactos', sub: 'Personas ligadas a cada empresa', cols: ['Nombre', 'Empresa', 'Email', 'Zona'], filter: () => true, row: (e) => [e.contacto, e.nombre, e.email, e.zona] },
-    cotizaciones: { kicker: 'Comercial', title: 'Cotizaciones', sub: 'Cotizaciones vivas', cols: ['Empresa', 'Contacto', 'Vence', 'Pipeline'], filter: (e) => e.cotizacionViva, row: (e) => [e.nombre, e.contacto, e.cotizacionVence || '—', moneyK(e.pipeline)] },
-    pedidos: { kicker: 'Comercial', title: 'Pedidos', sub: 'Pedidos en proceso', cols: ['Empresa', 'Contacto', 'Zona', 'Pipeline'], filter: (e) => e.pedidoEnProceso, row: (e) => [e.nombre, e.contacto, e.zona, moneyK(e.pipeline)] },
-    productos: { kicker: 'Operación', title: 'Productos', sub: 'Mix de ventas por empresa', cols: ['Empresa', 'Maquinaria', 'Consumibles', 'Servicios'], filter: () => true, row: (e) => [e.nombre, moneyK(e.ventasMaquinaria), moneyK(e.ventasConsumibles), moneyK(e.ventasServicios)] },
-    maquinas: { kicker: 'Operación', title: 'Máquinas instaladas', sub: 'Parque instalado por cliente', cols: ['Empresa', 'Zona', 'Máquinas', 'Recompra'], filter: (e) => Number(e.maquinasInstaladas) > 0, row: (e) => [e.nombre, e.zona, String(e.maquinasInstaladas), e.recompra ? 'Sí' : 'No'] },
-    tickets: { kicker: 'Operación', title: 'Servicios / Tickets', sub: 'Tickets abiertos', cols: ['Empresa', 'Contacto', 'Tickets', 'Estado'], filter: (e) => Number(e.ticketsAbiertos) > 0, row: (e) => [e.nombre, e.contacto, String(e.ticketsAbiertos), ESTADOS[e.estado]] },
-    actividades: { kicker: 'Operación', title: 'Actividades', sub: 'Seguimiento comercial', cols: ['Empresa', 'Días sin actividad', 'Visita', 'Alerta'], filter: () => true, row: (e) => [e.nombre, String(e.diasSinActividad), e.visitaSemana ? 'Esta semana' : '—', e.diasSinActividad >= 5 ? 'Inactividad' : (e.cotizacionViva ? 'Cotización' : 'OK')] },
+    cotizaciones: { kicker: 'Comercial', title: 'Cotizaciones', sub: 'Cotizaciones vivas (pendiente conectar tabla cotizaciones)', cols: ['Empresa', 'Contacto', 'Vence', 'Pipeline'], filter: (e) => e.cotizacionViva, row: (e) => [e.nombre, e.contacto, e.cotizacionVence || '—', moneyK(e.pipeline)] },
+    pedidos: { kicker: 'Comercial', title: 'Pedidos', sub: 'Pedidos en proceso (pendiente conectar tabla pedidos)', cols: ['Empresa', 'Contacto', 'Zona', 'Pipeline'], filter: (e) => e.pedidoEnProceso, row: (e) => [e.nombre, e.contacto, e.zona, moneyK(e.pipeline)] },
+    productos: { kicker: 'Operación', title: 'Productos', sub: 'Mix de ventas por empresa (pendiente conectar cotizacion_items/pedidos)', cols: ['Empresa', 'Maquinaria', 'Consumibles', 'Servicios'], filter: () => true, row: (e) => [e.nombre, moneyK(e.ventasMaquinaria), moneyK(e.ventasConsumibles), moneyK(e.ventasServicios)] },
+    maquinas: { kicker: 'Operación', title: 'Máquinas instaladas', sub: 'Parque instalado por cliente (pendiente conectar tabla maquinas_instaladas)', cols: ['Empresa', 'Zona', 'Máquinas', 'Recompra'], filter: (e) => Number(e.maquinasInstaladas) > 0, row: (e) => [e.nombre, e.zona, String(e.maquinasInstaladas), e.recompra ? 'Sí' : 'No'] },
+    tickets: { kicker: 'Operación', title: 'Servicios / Tickets', sub: 'Tickets abiertos (pendiente conectar tabla tickets)', cols: ['Empresa', 'Contacto', 'Tickets', 'Estado'], filter: (e) => Number(e.ticketsAbiertos) > 0, row: (e) => [e.nombre, e.contacto, String(e.ticketsAbiertos), ESTADOS[e.estado]] },
+    actividades: { kicker: 'Operación', title: 'Actividades', sub: 'Seguimiento comercial (pendiente conectar tabla actividades)', cols: ['Empresa', 'Días sin actividad', 'Visita', 'Alerta'], filter: () => true, row: (e) => [e.nombre, String(e.diasSinActividad), e.visitaSemana ? 'Esta semana' : '—', e.diasSinActividad >= 5 ? 'Inactividad' : (e.cotizacionViva ? 'Cotización' : 'OK')] },
     calendario: { kicker: 'Operación', title: 'Calendario', sub: 'Visitas de la semana', cols: ['Empresa', 'Contacto', 'Zona', 'Visita'], filter: (e) => e.visitaSemana, row: (e) => [e.nombre, e.contacto, e.zona, 'Agendada'] },
     recompras: { kicker: 'Operación', title: 'Recompras vigiladas', sub: 'Clientes con señal de recompra', cols: ['Empresa', 'Máquinas', 'Consumibles', 'Zona'], filter: (e) => e.recompra, row: (e) => [e.nombre, String(e.maquinasInstaladas), moneyK(e.ventasConsumibles), e.zona] },
-    marketing: { kicker: 'Inteligencia', title: 'Marketing', sub: 'Cuentas por zona', cols: ['Empresa', 'Zona', 'Estado', 'Representante'], filter: () => true, row: (e) => [e.nombre, e.zona, ESTADOS[e.estado], e.representante] },
+    marketing: { kicker: 'Inteligencia', title: 'Marketing', sub: 'Cuentas por zona', cols: ['Empresa', 'Zona', 'Estado', 'Representante'], filter: () => true, row: (e) => [e.nombre, e.zona, ESTADOS[e.estado], e.representante || '—'] },
     reportes: { kicker: 'Inteligencia', title: 'Reportes', sub: 'Resumen comercial por cuenta', cols: ['Empresa', 'Pipeline', 'Ventas', 'Estado'], filter: () => true, row: (e) => [e.nombre, moneyK(e.pipeline), moneyK(Number(e.ventasMaquinaria) + Number(e.ventasConsumibles) + Number(e.ventasServicios)), ESTADOS[e.estado]] },
     forecast: { kicker: 'Inteligencia', title: 'Forecast', sub: 'Pipeline ponderado por cuenta', cols: ['Empresa', 'Pipeline', 'Prob.', 'Ponderado'], filter: (e) => e.estado !== 'cerrado', row: (e) => [e.nombre, moneyK(e.pipeline), e.probabilidad + '%', moneyK(Number(e.pipeline) * Number(e.probabilidad) / 100)] },
-    insights: { kicker: 'Inteligencia', title: 'Insights', sub: 'Señales del arreglo de clientes', cols: ['Empresa', 'Señal', 'Detalle', 'Estado'], filter: () => true, row: (e) => {
+    insights: { kicker: 'Inteligencia', title: 'Insights', sub: 'Señales del pipeline real (empresas + oportunidades)', cols: ['Empresa', 'Señal', 'Detalle', 'Estado'], filter: () => true, row: (e) => {
       let senal = 'Estable';
       let det = 'Sin riesgo visible';
       if (e.cotizacionViva) { senal = 'Cotización viva'; det = e.cotizacionVence || 'Seguimiento'; }
@@ -974,7 +1024,7 @@
     highlightNav(view);
   }
 
-  // 2) CRUD — abrir modal para crear (sin id) o editar (con id)
+  // 2) CRUD — abrir modal para crear (sin id) o editar (con id de oportunidad)
   function openModal(id) {
     const modal = $('#modal-empresa');
     const emp = id ? window.empresas.find((e) => e.id === id) : null;
@@ -985,7 +1035,7 @@
     $('#emp-email').value = emp ? emp.email : '';
     $('#emp-zona').value = emp ? emp.zona : '';
     $('#emp-rep').value = emp ? emp.representante : '';
-    $('#emp-estado').value = emp ? emp.estado : 'lead';
+    $('#emp-estado').value = emp ? emp.estado : 'prospecto';
     $('#emp-pipeline').value = emp ? emp.pipeline : 0;
     $('#emp-maq').value = emp ? emp.ventasMaquinaria : 0;
     $('#emp-con').value = emp ? emp.ventasConsumibles : 0;
@@ -1003,7 +1053,7 @@
     const emp = window.empresas.find((e) => e.id === id);
     if (!emp) return;
     pendingDeleteId = id;
-    $('#confirm-text').textContent = '¿Eliminar "' + emp.nombre + '"? Esta acción no se puede deshacer.';
+    $('#confirm-text').textContent = '¿Eliminar la oportunidad de "' + emp.nombre + '"? La empresa y el contacto se conservan; esta acción no se puede deshacer.';
     $('#modal-confirm').classList.remove('hidden');
   }
 
@@ -1012,11 +1062,27 @@
     $('#modal-confirm').classList.add('hidden');
   }
 
-  function confirmDelete() {
+  async function confirmDelete() {
     if (!pendingDeleteId) return;
-    window.empresas = window.empresas.filter((e) => e.id !== pendingDeleteId);
-    closeConfirmModal();
-    renderAll();
+    const btn = $('#btn-confirm-delete');
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Eliminando…';
+    try {
+      // Solo se borra la OPORTUNIDAD; la empresa y el contacto se conservan
+      // (una empresa puede tener más de una oportunidad en el futuro).
+      await supaFetch('oportunidades?id=eq.' + pendingDeleteId, {
+        method: 'DELETE',
+        headers: { Prefer: 'return=minimal' },
+      });
+      closeConfirmModal();
+      await loadEmpresas();
+    } catch (err) {
+      showError('No se pudo eliminar en Supabase: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
   }
 
   function renderAll() {
@@ -1029,6 +1095,36 @@
     renderEmpresas();
     renderKanban();
     if (LISTAS[currentView]) renderLista(currentView);
+  }
+
+  // ---- Carga inicial y recarga desde Supabase ----
+  async function loadEmpresas() {
+    const badge = $('#datos-badge');
+    try {
+      const rows = await supaFetch(
+        'oportunidades?select=id,empresa_id,contacto_id,nombre,interes,etapa,prioridad,valor_estimado,probabilidad,fecha_cierre,' +
+        'empresas(id,nombre,zona,industria,ciudad,estatus),' +
+        'contactos(id,nombre,apellido,email,telefono),' +
+        'perfiles(nombre)' +
+        '&order=valor_estimado.desc.nullslast',
+        { method: 'GET' }
+      );
+      window.empresas = rows.map(mapOportunidadToEmpresa);
+      if (badge) {
+        badge.textContent = 'Conectado a Supabase';
+        badge.className = 'ml-auto rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-gold';
+      }
+      hideError();
+    } catch (err) {
+      console.error(err);
+      window.empresas = [];
+      if (badge) {
+        badge.textContent = 'Sin conexión a Supabase';
+        badge.className = 'ml-auto rounded-full border border-destructive/40 bg-destructive/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-destructive';
+      }
+      showError('No se pudieron cargar los datos de Supabase: ' + err.message);
+    }
+    renderAll();
   }
 
   document.addEventListener('click', (ev) => {
@@ -1045,48 +1141,100 @@
   $('#btn-nueva-empresa').addEventListener('click', () => openModal());
   $('#btn-confirm-delete').addEventListener('click', confirmDelete);
 
-  $('#form-empresa').addEventListener('submit', (ev) => {
+  $('#form-empresa').addEventListener('submit', async (ev) => {
     ev.preventDefault();
-    const id = $('#emp-id').value;
-    // Campos que sí vienen del formulario
-    const formFields = {
-      nombre: $('#emp-nombre').value.trim(),
-      contacto: $('#emp-contacto').value.trim(),
-      email: $('#emp-email').value.trim(),
-      zona: $('#emp-zona').value.trim(),
-      representante: $('#emp-rep').value.trim(),
-      estado: $('#emp-estado').value,
-      pipeline: Number($('#emp-pipeline').value) || 0,
-      ventasMaquinaria: Number($('#emp-maq').value) || 0,
-      ventasConsumibles: Number($('#emp-con').value) || 0,
-      ventasServicios: Number($('#emp-ser').value) || 0,
-    };
+    const id = $('#emp-id').value; // id de la OPORTUNIDAD; vacío si es un registro nuevo
+    const submitBtn = ev.target.querySelector('button[type="submit"]');
+    const nombreEmpresa = $('#emp-nombre').value.trim();
+    const nombreContacto = $('#emp-contacto').value.trim();
+    const emailContacto = $('#emp-email').value.trim();
+    const zona = $('#emp-zona').value.trim();
+    const etapa = $('#emp-estado').value;
+    const valorEstimado = Number($('#emp-pipeline').value) || 0;
 
-    if (id) {
-      // Editar: solo se tocan los campos del formulario; el resto (cotizaciones,
-      // tickets, máquinas instaladas, recompra, etc.) se conserva intacto.
-      const emp = window.empresas.find((e) => e.id === id);
-      if (emp) Object.assign(emp, formFields);
-    } else {
-      // Nuevo registro: se completan valores por defecto para el resto de campos.
-      const nueva = Object.assign({
-        id: 'emp-' + (uid++),
-        probabilidad: 40,
-        cotizacionViva: false,
-        cotizacionVence: '',
-        pedidoEnProceso: false,
-        maquinasInstaladas: 0,
-        recompra: false,
-        ticketsAbiertos: 0,
-        diasSinActividad: 0,
-        visitaSemana: false,
-        perdido: false,
-      }, formFields);
-      window.empresas.push(nueva);
-      showView('empresas');
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando…';
+
+    try {
+      if (id) {
+        // ---- EDITAR ----
+        const emp = window.empresas.find((e) => e.id === id);
+        if (!emp) throw new Error('Registro no encontrado');
+
+        // 1) Empresa
+        await supaFetch('empresas?id=eq.' + emp.empresaId, {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({ nombre: nombreEmpresa, zona: zona }),
+        });
+
+        // 2) Contacto (actualiza el existente o crea uno nuevo si la oportunidad no tenía)
+        let contactoId = emp.contactoId;
+        if (contactoId) {
+          await supaFetch('contactos?id=eq.' + contactoId, {
+            method: 'PATCH',
+            headers: { Prefer: 'return=minimal' },
+            body: JSON.stringify({ nombre: nombreContacto, email: emailContacto }),
+          });
+        } else {
+          const creados = await supaFetch('contactos', {
+            method: 'POST',
+            headers: { Prefer: 'return=representation' },
+            body: JSON.stringify({ empresa_id: emp.empresaId, nombre: nombreContacto, email: emailContacto }),
+          });
+          contactoId = creados[0].id;
+        }
+
+        // 3) Oportunidad
+        await supaFetch('oportunidades?id=eq.' + id, {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({ etapa: etapa, valor_estimado: valorEstimado, contacto_id: contactoId }),
+        });
+      } else {
+        // ---- CREAR ----
+        const empresasCreadas = await supaFetch('empresas', {
+          method: 'POST',
+          headers: { Prefer: 'return=representation' },
+          body: JSON.stringify({ nombre: nombreEmpresa, zona: zona, estatus: 'Prospecto' }),
+        });
+        const nuevaEmpresa = empresasCreadas[0];
+
+        const contactosCreados = await supaFetch('contactos', {
+          method: 'POST',
+          headers: { Prefer: 'return=representation' },
+          body: JSON.stringify({ empresa_id: nuevaEmpresa.id, nombre: nombreContacto, email: emailContacto }),
+        });
+        const nuevoContacto = contactosCreados[0];
+
+        await supaFetch('oportunidades', {
+          method: 'POST',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({
+            empresa_id: nuevaEmpresa.id,
+            contacto_id: nuevoContacto.id,
+            // La UI actual no tiene un campo dedicado a "nombre de oportunidad" / "interés";
+            // se autogeneran aquí. Si Moha quiere capturarlos explícitamente, se agregan
+            // dos inputs más al modal y se usan sus valores en vez de estos por defecto.
+            nombre: 'Oportunidad – ' + nombreEmpresa,
+            interes: 'Generado desde el CRM',
+            etapa: etapa,
+            prioridad: 'Media',
+            valor_estimado: valorEstimado,
+            probabilidad: defaultProbabilidad(etapa),
+          }),
+        });
+        showView('empresas');
+      }
+      closeModal();
+      await loadEmpresas();
+    } catch (err) {
+      showError('No se pudo guardar en Supabase: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
     }
-    closeModal();
-    renderAll();
   });
 
   $('#global-search').addEventListener('input', (ev) => {
@@ -1110,8 +1258,8 @@
   // 3) Kanban Drag & Drop
   bindKanbanDnd();
 
-  renderAll();
   showView('dashboard');
+  loadEmpresas(); // 1) sin mock data — todo se lee de Supabase (empresas + oportunidades)
 })();
 </script>
 </body>
