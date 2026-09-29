@@ -1379,12 +1379,11 @@
   // pruebas, pero antes de producción hay que activar RLS + políticas.
   // ============================================================
   const SUPABASE_URL = 'https://kvjqekfbrvkatkthdjwo.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_8zSsLUp1SnQn7656usWieg_GUPHPe5D';
+  const SUPABASE_KEY = sb_publishable_8zSsLUp1SnQn7656usWieg_GUPHPe5D;
   function supaHeaders(extra) {
     return Object.assign(
       {
         apikey: SUPABASE_KEY,
-        Authorization: 'Bearer ' + SUPABASE_KEY,
         'Content-Type': 'application/json',
       },
       extra || {}
@@ -1403,6 +1402,25 @@
     if (res.status === 204) return null;
     const ct = res.headers.get('content-type') || '';
     return ct.includes('application/json') ? res.json() : null;
+  }
+  // ---- Saneamiento de campos UUID ----
+  // Cualquier valor "vacío" (undefined, null, cadena vacía, o incluso las cadenas
+  // de texto "null"/"undefined" que a veces llegan de un <select>/dataset) se
+  // normaliza a un null real de JS. Esto evita que fetch/JSON.stringify o una
+  // concatenación de URL terminen enviando la palabra "null" como si fuera un
+  // uuid válido (causa del error de Postgres: invalid input syntax for type uuid).
+  function uuidOrNull(v) {
+    if (v === undefined || v === null) return null;
+    const s = String(v).trim();
+    if (s === '' || s === 'null' || s === 'undefined') return null;
+    return s;
+  }
+  // Construye un filtro "columna=eq.<uuid>" solo si el valor es un uuid real;
+  // si no lo es, lanza un error controlado en vez de mandar "eq.null" a Supabase.
+  function eqUuidFilter(column, value) {
+    const v = uuidOrNull(value);
+    if (!v) throw new Error('No se puede construir el filtro "' + column + '": falta un id válido (registro sin vínculo).');
+    return column + '=eq.' + v;
   }
   // ---- Mapeo oportunidad (+ empresa + contacto embebidos) -> objeto plano del frontend ----
   function defaultProbabilidad(etapa) {
@@ -2774,6 +2792,15 @@
       title: 'Eliminar oportunidad',
       text: (label) => '¿Eliminar la oportunidad de "' + label + '"? La empresa y el contacto se conservan; esta acción no se puede deshacer.',
       label: (id) => { const e = window.empresas.find((x) => x.id === id); return e ? e.nombre : 'este registro'; },
+      // Las cotizaciones no se borran (son registros de venta reales): solo se
+      // desvincula su oportunidad_id para no romper la FK cotizaciones_oportunidad_id_fkey.
+      preDelete: async (id) => {
+        await supaFetch('cotizaciones?' + eqUuidFilter('oportunidad_id', id), {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({ oportunidad_id: null }),
+        });
+      },
       reload: () => loadEmpresas(),
     },
     leads: {
@@ -2786,24 +2813,57 @@
       title: 'Eliminar contacto',
       text: (label) => '¿Eliminar al contacto "' + label + '"? Esta acción no se puede deshacer.',
       label: (id) => { const c = window.contactos.find((x) => x.id === id); return c ? [c.nombre, c.apellido].filter(Boolean).join(' ') : 'este contacto'; },
+      // Se desvincula (no se borran) todos los registros dependientes que
+      // referencian este contacto, para no romper sus respectivas FKs.
+      preDelete: async (id) => {
+        const filtro = eqUuidFilter('contacto_id', id);
+        await Promise.all([
+          supaFetch('cotizaciones?' + filtro, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ contacto_id: null }) }),
+          supaFetch('oportunidades?' + filtro, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ contacto_id: null }) }),
+          supaFetch('pedidos?' + filtro, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ contacto_id: null }) }),
+        ]);
+      },
       reload: () => loadContactos(),
     },
     productos_maquinas: {
       title: 'Eliminar máquina',
       text: (label) => '¿Eliminar "' + label + '" del catálogo de máquinas? Esta acción no se puede deshacer.',
       label: (id) => { const m = window.productosMaquinas.find((x) => x.id === id); return m ? m.nombre : 'esta máquina'; },
+      // Se desvincula de las partidas de cotizaciones ya emitidas (se conserva la
+      // partida histórica, solo se limpia la referencia al producto eliminado).
+      preDelete: async (id) => {
+        await supaFetch('cotizacion_items?' + eqUuidFilter('producto_maquina_id', id), {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({ producto_maquina_id: null }),
+        });
+      },
       reload: () => loadProductosMaquinas(),
     },
     productos_consumibles: {
       title: 'Eliminar consumible',
       text: (label) => '¿Eliminar "' + label + '" del catálogo de consumibles? Esta acción no se puede deshacer.',
       label: (id) => { const c = window.productosConsumibles.find((x) => x.id === id); return c ? c.nombre : 'este consumible'; },
+      preDelete: async (id) => {
+        await supaFetch('cotizacion_items?' + eqUuidFilter('producto_consumible_id', id), {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({ producto_consumible_id: null }),
+        });
+      },
       reload: () => loadProductosConsumibles(),
     },
     productos_servicios: {
       title: 'Eliminar servicio',
       text: (label) => '¿Eliminar "' + label + '" del catálogo de servicios? Esta acción no se puede deshacer.',
       label: (id) => { const s = window.productosServicios.find((x) => x.id === id); return s ? s.nombre : 'este servicio'; },
+      preDelete: async (id) => {
+        await supaFetch('cotizacion_items?' + eqUuidFilter('producto_servicio_id', id), {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({ producto_servicio_id: null }),
+        });
+      },
       reload: () => loadProductosServicios(),
     },
     cotizaciones: {
@@ -2811,7 +2871,13 @@
       text: (label) => '¿Eliminar la cotización "' + label + '"? Se eliminarán también sus partidas; esta acción no se puede deshacer.',
       label: (id) => { const c = window.cotizaciones.find((x) => x.id === id); return c ? c.folio : 'esta cotización'; },
       preDelete: async (id) => {
-        await supaFetch('cotizacion_items?cotizacion_id=eq.' + id, { method: 'DELETE', headers: { Prefer: 'return=minimal' } });
+        const filtro = eqUuidFilter('cotizacion_id', id);
+        // Los pedidos generados a partir de esta cotización se conservan, solo se
+        // desvincula la referencia (pedidos_cotizacion_id_fkey es NO ACTION).
+        await supaFetch('pedidos?' + filtro, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ cotizacion_id: null }) });
+        // cotizacion_items tiene ON DELETE CASCADE en la base de datos, pero se
+        // borra explícitamente aquí también para que la UI quede consistente al instante.
+        await supaFetch('cotizacion_items?' + filtro, { method: 'DELETE', headers: { Prefer: 'return=minimal' } });
       },
       reload: () => loadCotizaciones(),
     },
@@ -2852,7 +2918,7 @@
       if (cfg.preDelete) await cfg.preDelete(id);
       // Para "oportunidades" solo se borra la oportunidad; la empresa y el
       // contacto se conservan (una empresa puede tener más de una oportunidad).
-      await supaFetch(table + '?id=eq.' + id, {
+      await supaFetch(table + '?' + eqUuidFilter('id', id), {
         method: 'DELETE',
         headers: { Prefer: 'return=minimal' },
       });
@@ -2988,16 +3054,28 @@
         // ---- EDITAR ----
         const emp = window.empresas.find((e) => e.id === id);
         if (!emp) throw new Error('Registro no encontrado');
-        // 1) Empresa
-        await supaFetch('empresas?id=eq.' + emp.empresaId, {
-          method: 'PATCH',
-          headers: { Prefer: 'return=minimal' },
-          body: JSON.stringify({ nombre: nombreEmpresa, zona: zona }),
-        });
+        // 1) Empresa — saneamos el id: si la oportunidad quedó sin empresa vinculada
+        // (empresa_id nulo en la fila real), en vez de mandar "eq.null" a Supabase se
+        // crea la empresa faltante y se repara el vínculo de una vez.
+        let empresaId = uuidOrNull(emp.empresaId);
+        if (empresaId) {
+          await supaFetch('empresas?' + eqUuidFilter('id', empresaId), {
+            method: 'PATCH',
+            headers: { Prefer: 'return=minimal' },
+            body: JSON.stringify({ nombre: nombreEmpresa, zona: zona }),
+          });
+        } else {
+          const empresasCreadas = await supaFetch('empresas', {
+            method: 'POST',
+            headers: { Prefer: 'return=representation' },
+            body: JSON.stringify({ nombre: nombreEmpresa, zona: zona, estatus: 'Prospecto' }),
+          });
+          empresaId = empresasCreadas[0].id;
+        }
         // 2) Contacto (actualiza el existente o crea uno nuevo si la oportunidad no tenía)
-        let contactoId = emp.contactoId;
+        let contactoId = uuidOrNull(emp.contactoId);
         if (contactoId) {
-          await supaFetch('contactos?id=eq.' + contactoId, {
+          await supaFetch('contactos?' + eqUuidFilter('id', contactoId), {
             method: 'PATCH',
             headers: { Prefer: 'return=minimal' },
             body: JSON.stringify({ nombre: nombreContacto, email: emailContacto }),
@@ -3006,15 +3084,15 @@
           const creados = await supaFetch('contactos', {
             method: 'POST',
             headers: { Prefer: 'return=representation' },
-            body: JSON.stringify({ empresa_id: emp.empresaId, nombre: nombreContacto, email: emailContacto }),
+            body: JSON.stringify({ empresa_id: empresaId, nombre: nombreContacto, email: emailContacto }),
           });
           contactoId = creados[0].id;
         }
-        // 3) Oportunidad
-        await supaFetch('oportunidades?id=eq.' + id, {
+        // 3) Oportunidad (incluye empresa_id por si el vínculo se acaba de reparar)
+        await supaFetch('oportunidades?' + eqUuidFilter('id', id), {
           method: 'PATCH',
           headers: { Prefer: 'return=minimal' },
-          body: JSON.stringify({ etapa: etapa, valor_estimado: valorEstimado, contacto_id: contactoId }),
+          body: JSON.stringify({ etapa: etapa, valor_estimado: valorEstimado, contacto_id: contactoId, empresa_id: empresaId }),
         });
       } else {
         // ---- CREAR ----
@@ -3239,16 +3317,16 @@
         precio_unitario: precio_unitario,
         descuento_pct: descuento_pct,
         subtotal: cantidad * precio_unitario * (1 - descuento_pct / 100),
-        producto_maquina_id: tipo === 'maquina' ? (prodSel.value || null) : null,
-        producto_consumible_id: tipo === 'consumible' ? (prodSel.value || null) : null,
-        producto_servicio_id: tipo === 'servicio' ? (prodSel.value || null) : null,
+        producto_maquina_id: tipo === 'maquina' ? uuidOrNull(prodSel.value) : null,
+        producto_consumible_id: tipo === 'consumible' ? uuidOrNull(prodSel.value) : null,
+        producto_servicio_id: tipo === 'servicio' ? uuidOrNull(prodSel.value) : null,
       });
     }
     const totals = recalcCotizacionTotals();
     const headerPayload = {
       empresa_id: $('#cot-empresa').value,
-      contacto_id: $('#cot-contacto').value || null,
-      oportunidad_id: $('#cot-oportunidad').value || null,
+      contacto_id: uuidOrNull($('#cot-contacto').value),
+      oportunidad_id: uuidOrNull($('#cot-oportunidad').value),
       estatus: $('#cot-estatus').value,
       subtotal: totals.subtotal,
       descuento_pct: totals.descuentoGlobal,
@@ -3288,8 +3366,8 @@
     const submitBtn = ev.target.querySelector('button[type="submit"]');
     const payload = {
       empresa_id: $('#ped-empresa').value,
-      contacto_id: $('#ped-contacto').value || null,
-      cotizacion_id: $('#ped-cotizacion').value || null,
+      contacto_id: uuidOrNull($('#ped-contacto').value),
+      cotizacion_id: uuidOrNull($('#ped-cotizacion').value),
       estatus: $('#ped-estatus').value,
       total: Number($('#ped-total').value) || 0,
       fecha_entrega_estimada: $('#ped-fecha-entrega').value || null,
